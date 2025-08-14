@@ -1,3 +1,5 @@
+import 'package:currency_rates/core/router/router.dart';
+import 'package:currency_rates/uikit/themes/app_theme_data.dart';
 import 'package:flutter/material.dart';
 
 class CurrencyRatesApp extends StatelessWidget {
@@ -5,8 +7,11 @@ class CurrencyRatesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(body: Center(child: Text('Hello World!'))),
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      theme: AppThemeData.lightTheme,
+      darkTheme: AppThemeData.darkTheme,
+      routerConfig: router,
     );
   }
 }
