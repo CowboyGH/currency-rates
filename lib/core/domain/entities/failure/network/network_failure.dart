@@ -9,3 +9,9 @@ sealed class NetworkFailure extends AppFailure {
 final class NoNetworkFailure extends NetworkFailure {
   const NoNetworkFailure() : super(message: 'No network connection');
 }
+
+/// Неизвестная ошибка сети.
+final class UnknownNetworkFailure extends NetworkFailure {
+  const UnknownNetworkFailure(Exception exception)
+    : super(message: 'Unknown network error', parentException: exception);
+}
