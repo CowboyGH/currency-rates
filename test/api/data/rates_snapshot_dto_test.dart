@@ -34,9 +34,6 @@ void main() {
       expect(snapshot.date, equals('16.08.2025'));
       expect(snapshot.name, equals('Foreign Currency Market'));
     });
-
-    expect(snapshot.date, equals('16.08.2025'));
-    expect(snapshot.name, equals('Foreign Currency Market'));
   });
 
   test('парсит список валют', () {
