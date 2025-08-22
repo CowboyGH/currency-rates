@@ -1,7 +1,7 @@
 name: currency_rates
 description: "Приложение для получения и отображения курсов валют."
 publish_to: 'none'
-version: 0.2.20
+version: 0.2.21
 
 environment:
   sdk: ^3.8.0
@@ -25,6 +25,7 @@ dependencies:
   path_provider: ^2.1.5
   provider: ^6.1.5+1
   retrofit: ^4.7.1
+  windows1251: ^2.0.1
   xml: ^6.5.0
 
 dev_dependencies:

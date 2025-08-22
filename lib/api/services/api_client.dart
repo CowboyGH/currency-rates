@@ -11,5 +11,6 @@ abstract class ApiClient {
 
   /// Получение списка валют
   @GET(ApiUrls.currencies)
-  Future<HttpResponse<String>> getCurrencies();
+  @DioResponseType(ResponseType.bytes)
+  Future<HttpResponse<List<int>>> getCurrencies();
 }

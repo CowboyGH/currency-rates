@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:retrofit/dio.dart';
+import 'package:windows1251/windows1251.dart';
 
 import 'rates_remote_data_source_test.mocks.dart';
 
@@ -32,8 +33,9 @@ void main() {
 </Valute>
 </ValCurs>
 ''';
-  final HttpResponse<String> response = HttpResponse<String>(
-    xml,
+  final bytes = windows1251.encode(xml);
+  final HttpResponse<List<int>> response = HttpResponse<List<int>>(
+    bytes,
     Response(requestOptions: RequestOptions(path: '/'), statusCode: 200),
   );
 
