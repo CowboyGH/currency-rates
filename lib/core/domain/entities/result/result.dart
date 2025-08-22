@@ -16,17 +16,6 @@ sealed class Result<T, E extends Object> {
 
   /// Возвращает ошибку, если результат [Failure], иначе `null`.
   E? get failure => this is Failure<T, E> ? (this as Failure<T, E>).error : null;
-
-  /// Применяет функции [onSuccess] или [onFailure] в зависимости от результата.
-  R fold<R>(
-    R Function(T data) onSuccess,
-    R Function(E failure, [StackTrace? stackTrace]) onFailure,
-  ) {
-    return switch (this) {
-      Success<T, E>(:final data) => onSuccess(data),
-      Failure<T, E>(:final error, :final stackTrace) => onFailure(error, stackTrace),
-    };
-  }
 }
 
 final class Success<T, E extends Object> extends Result<T, E> {
