@@ -1,10 +1,12 @@
 import 'package:currency_rates/uikit/themes/colors/app_color_theme.dart';
+import 'package:currency_rates/uikit/themes/text/app_text_theme.dart';
 import 'package:flutter/material.dart';
 
 /// Тема приложения
 abstract class AppThemeData {
   static const _lightColorTheme = AppColorTheme.light();
   static const _darkColorTheme = AppColorTheme.dark();
+  static final _textTheme = AppTextTheme.base();
 
   /// Светлая тема
   static final lightTheme = ThemeData(
@@ -22,7 +24,7 @@ abstract class AppThemeData {
     disabledColor: _lightColorTheme.disabled,
     dividerColor: _lightColorTheme.divider,
     splashFactory: NoSplash.splashFactory,
-    extensions: [_lightColorTheme],
+    extensions: [_lightColorTheme, _textTheme],
   );
 
   /// Темная тема
@@ -41,6 +43,6 @@ abstract class AppThemeData {
     disabledColor: _darkColorTheme.disabled,
     dividerColor: _darkColorTheme.divider,
     splashFactory: NoSplash.splashFactory,
-    extensions: [_darkColorTheme],
+    extensions: [_darkColorTheme, _textTheme],
   );
 }
