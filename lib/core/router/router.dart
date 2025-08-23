@@ -1,12 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:currency_rates/features/rates/presentation/currency_rates_screen_builder.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/rates',
   routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => Scaffold(body: Center(child: Text('Hello World!'))),
-    ),
+    GoRoute(path: '/rates', builder: (context, state) => CurrencyRatesScreenBuilder()),
   ],
 );
