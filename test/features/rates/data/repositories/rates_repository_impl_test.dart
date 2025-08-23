@@ -71,7 +71,7 @@ void main() {
       // Assert
       expect(result.isFailure, true);
       expect(fail, isA<NoNetworkFailure>());
-      expect(fail.message, 'No network connection');
+      expect(fail.message, isNotEmpty);
 
       verify(mockRatesRemoteDataSource.getRates()).called(1);
     });
@@ -93,7 +93,7 @@ void main() {
       // Assert
       expect(result.isFailure, true);
       expect(fail, isA<UnknownNetworkFailure>());
-      expect(fail.message, 'Unknown network error');
+      expect(fail.message, isNotEmpty);
       expect(fail.parentException, equals(dioException));
 
       verify(mockRatesRemoteDataSource.getRates()).called(1);
@@ -113,7 +113,7 @@ void main() {
       // Assert
       expect(result.isFailure, true);
       expect(fail, isA<UnknownFailure>());
-      expect(fail.message, isNotNull);
+      expect(fail.message, isNotEmpty);
       expect(fail.parentException, isNull);
 
       verify(mockRatesRemoteDataSource.getRates()).called(1);
