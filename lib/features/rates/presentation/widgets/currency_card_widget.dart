@@ -1,0 +1,86 @@
+import 'package:currency_rates/features/rates/domain/entities/currency_entity.dart';
+import 'package:currency_rates/uikit/themes/colors/app_color_theme.dart';
+import 'package:currency_rates/uikit/themes/text/app_text_theme.dart';
+import 'package:flutter/material.dart';
+
+class CurrencyCardWidget extends StatelessWidget {
+  final CurrencyEntity currency;
+  const CurrencyCardWidget({super.key, required this.currency});
+
+  @override
+  Widget build(BuildContext context) {
+    final colorTheme = AppColorTheme.of(context);
+    final textTheme = AppTextTheme.of(context);
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      shadowColor: colorTheme.shadow.withValues(alpha: 0.3),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Код валюты с акцентным фоном
+            Container(
+              width: 56,
+              height: 56,
+              decoration: BoxDecoration(
+                color: colorTheme.primary,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                currency.charCode,
+                style: textTheme.number.copyWith(
+                  color: colorTheme.onPrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const SizedBox(width: 16),
+            // Информация о валюте
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    currency.name,
+                    style: textTheme.subtitle.copyWith(
+                      color: colorTheme.onSurface,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '${currency.nominal} ${currency.charCode} = ${currency.value} ₽',
+                    style: textTheme.number.copyWith(
+                      color: colorTheme.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  if (currency.nominal != 1)
+                    Text(
+                      '1 ${currency.charCode} = ${currency.unitRate} ₽',
+                      style: textTheme.body.copyWith(
+                        color: colorTheme.onSurface.withValues(alpha: 0.7),
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
