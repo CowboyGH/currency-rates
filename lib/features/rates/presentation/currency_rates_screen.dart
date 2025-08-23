@@ -1,3 +1,4 @@
+import 'package:currency_rates/assets/strings/app_strings.dart';
 import 'package:currency_rates/features/rates/presentation/cubit/rates_cubit.dart';
 import 'package:currency_rates/features/rates/presentation/widgets/currency_card_widget.dart';
 import 'package:currency_rates/features/rates/presentation/widgets/currency_rates_load_error_widget.dart';
@@ -37,7 +38,7 @@ class _CurrencyRatesScreenState extends State<CurrencyRatesScreen> {
             if (state is RatesLoaded) {
               String date = state.snapshot.date;
               return Text(
-                'Курсы валют на $date',
+                '${AppStrings.currencyRatesOn} $date',
                 style: textTheme.subtitle.copyWith(color: colorTheme.onBackground),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
