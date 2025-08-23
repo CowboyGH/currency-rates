@@ -1,5 +1,6 @@
 import 'package:currency_rates/features/rates/presentation/cubit/rates_cubit.dart';
 import 'package:currency_rates/features/rates/presentation/widgets/currency_card_widget.dart';
+import 'package:currency_rates/features/rates/presentation/widgets/currency_rates_load_error_widget.dart';
 import 'package:currency_rates/uikit/themes/colors/app_color_theme.dart';
 import 'package:currency_rates/uikit/themes/text/app_text_theme.dart';
 import 'package:flutter/material.dart';
@@ -77,31 +78,9 @@ class _CurrencyRatesScreenState extends State<CurrencyRatesScreen> {
               );
             }
             if (state is RatesFailure) {
-              return Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.error_outline,
-                        color: colorTheme.error,
-                        size: 64,
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        state.failure.message ?? 'Неизвестная ошибка',
-                        style: textTheme.body.copyWith(color: colorTheme.onBackground),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 24),
-                      ElevatedButton(
-                        onPressed: _loadRates,
-                        child: Text('Повторить', style: textTheme.button),
-                      ),
-                    ],
-                  ),
-                ),
+              return CurrencyRatesLoadErrorWidget(
+                message: state.failure.message,
+                onRetry: _loadRates,
               );
             }
             return const SizedBox.shrink();
