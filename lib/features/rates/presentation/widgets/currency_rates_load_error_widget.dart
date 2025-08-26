@@ -21,26 +21,31 @@ class CurrencyRatesLoadErrorWidget extends StatelessWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.error_outline,
-              color: colorTheme.error,
-              size: 64,
+        child: Card(
+          color: colorTheme.surface,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          elevation: 2,
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.error_outline,
+                  color: colorTheme.error,
+                  size: 72,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  message ?? AppStrings.unknownError,
+                  style: textTheme.body.copyWith(color: colorTheme.onBackground),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
             ),
-            const SizedBox(height: 16),
-            Text(
-              message ?? AppStrings.unknownError,
-              style: textTheme.body.copyWith(color: colorTheme.onBackground),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: onRetry,
-              child: Text(AppStrings.retry, style: textTheme.button),
-            ),
-          ],
+          ),
         ),
       ),
     );
