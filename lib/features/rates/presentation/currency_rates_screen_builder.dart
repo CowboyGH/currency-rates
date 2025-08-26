@@ -1,4 +1,6 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:currency_rates/api/services/api_client.dart';
+import 'package:currency_rates/core/services/network_service.dart';
 import 'package:currency_rates/features/app/di/di.dart';
 import 'package:currency_rates/features/rates/data/repositories/rates_repository_impl.dart';
 import 'package:currency_rates/features/rates/data/sources/rates_remote_data_source.dart';
@@ -28,8 +30,16 @@ class CurrencyRatesScreenBuilder extends StatelessWidget {
         Provider<GetRatesUsecase>(
           create: (context) => GetRatesUsecase(repository: context.read<IRatesRepository>()),
         ),
+        Provider<Connectivity>(
+          create: (context) => Connectivity(),
+        ),
+        Provider<NetworkService>(
+          create: (context) => NetworkService(connectivity: context.read<Connectivity>()),
+          dispose: (context, value) => value.dispose(),
+        ),
         BlocProvider<RatesCubit>(
           create: (context) => RatesCubit(
+            context.read<NetworkService>(),
             context.read<GetRatesUsecase>(),
           ),
         ),

@@ -22,8 +22,31 @@ class _CurrencyRatesScreenState extends State<CurrencyRatesScreen> {
     super.initState();
   }
 
-  void _loadRates() {
-    context.read<RatesCubit>().loadRates();
+  void _loadRates({bool isRefresh = false}) {
+    context.read<RatesCubit>().loadRates(isRefresh: isRefresh);
+  }
+
+  void _showSnackBar({required String message}) {
+    if (!mounted) return;
+    final colorTheme = AppColorTheme.of(context);
+    final textTheme = AppTextTheme.of(context);
+
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        width: MediaQuery.of(context).size.width * 0.6,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        backgroundColor: colorTheme.primary,
+        content: Text(
+          message,
+          textAlign: TextAlign.center,
+          style: textTheme.body.copyWith(color: colorTheme.onPrimary),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+    );
   }
 
   @override
@@ -34,11 +57,11 @@ class _CurrencyRatesScreenState extends State<CurrencyRatesScreen> {
       appBar: AppBar(
         surfaceTintColor: colorTheme.surface,
         title: BlocBuilder<RatesCubit, RatesState>(
-          builder: (context, state) {
+          buildWhen: (_, current) => current is RatesLoaded,
+          builder: (_, state) {
             if (state is RatesLoaded) {
-              String date = state.snapshot.date;
               return Text(
-                '${AppStrings.currencyRatesOn} $date',
+                '${AppStrings.currencyRatesOn} ${state.snapshot.date}',
                 style: textTheme.subtitle.copyWith(color: colorTheme.onBackground),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -54,37 +77,38 @@ class _CurrencyRatesScreenState extends State<CurrencyRatesScreen> {
           ),
         ),
       ),
-      body: RefreshIndicator.adaptive(
-        onRefresh: () async => _loadRates(),
+      body: BlocListener<RatesCubit, RatesState>(
+        listener: (_, state) {
+          if (state is RatesUnchanged) {
+            _showSnackBar(message: AppStrings.refreshSuccess);
+          }
+        },
         child: BlocBuilder<RatesCubit, RatesState>(
-          builder: (context, state) {
-            if (state is RatesLoading) {
-              return Center(child: CircularProgressIndicator.adaptive());
+          builder: (_, state) {
+            switch (state) {
+              case RatesLoading():
+                return Center(child: CircularProgressIndicator.adaptive());
+              case RatesLoaded():
+                return RefreshIndicator.adaptive(
+                  onRefresh: () async => _loadRates(isRefresh: true),
+                  child: ListView.separated(
+                    itemCount: state.snapshot.currencies.length,
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                    itemBuilder: (_, index) {
+                      final currency = state.snapshot.currencies[index];
+                      return CurrencyCardWidget(currency: currency);
+                    },
+                    separatorBuilder: (_, _) => const SizedBox(height: 8),
+                  ),
+                );
+              case RatesLoadError():
+                return CurrencyRatesLoadErrorWidget(
+                  message: state.failure.message,
+                  onRetry: _loadRates,
+                );
+              default:
+                return const SizedBox.shrink();
             }
-            if (state is RatesLoaded) {
-              final snapshot = state.snapshot;
-              return ListView.separated(
-                itemCount: snapshot.currencies.length,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: 16,
-                ),
-                itemBuilder: (context, index) {
-                  final currency = snapshot.currencies[index];
-                  return CurrencyCardWidget(currency: currency);
-                },
-                separatorBuilder: (context, index) {
-                  return const SizedBox(height: 8);
-                },
-              );
-            }
-            if (state is RatesFailure) {
-              return CurrencyRatesLoadErrorWidget(
-                message: state.failure.message,
-                onRetry: _loadRates,
-              );
-            }
-            return const SizedBox.shrink();
           },
         ),
       ),
