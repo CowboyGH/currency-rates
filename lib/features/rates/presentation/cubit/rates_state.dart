@@ -29,6 +29,12 @@ class RatesLoaded extends RatesState {
   List<Object?> get props => [snapshot];
 }
 
+/// Состояние, когда данные при обновлении не изменились.
+/// Используется как сигнал для показа сообщения об актуальности данных.
+class RatesUnchanged extends RatesState {
+  const RatesUnchanged();
+}
+
 /// Состояние ошибки.
 class RatesFailure extends RatesState {
   final AppFailure failure;
