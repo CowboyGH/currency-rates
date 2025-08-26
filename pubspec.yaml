@@ -1,7 +1,7 @@
 name: currency_rates
 description: "Приложение для получения и отображения курсов валют."
 publish_to: 'none'
-version: 0.2.38
+version: 0.3.0
 
 environment:
   sdk: ^3.8.0
@@ -9,6 +9,7 @@ environment:
 dependencies:
   bloc_test: ^10.0.0
   connectivity_plus: ^6.1.5
+  decimal: ^3.2.4
   dio: ^5.9.0
   equatable: ^2.0.7
   flutter:
