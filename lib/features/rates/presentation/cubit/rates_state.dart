@@ -10,17 +10,17 @@ sealed class RatesState extends Equatable {
 }
 
 /// Начальное состояние.
-class RatesInitial extends RatesState {
+final class RatesInitial extends RatesState {
   const RatesInitial();
 }
 
 /// Состояние загрузки данных.
-class RatesLoading extends RatesState {
+final class RatesLoading extends RatesState {
   const RatesLoading();
 }
 
 /// Состояние успешной загрузки данных.
-class RatesLoaded extends RatesState {
+final class RatesLoaded extends RatesState {
   final RatesSnapshotEntity snapshot;
 
   const RatesLoaded(this.snapshot);
@@ -31,12 +31,12 @@ class RatesLoaded extends RatesState {
 
 /// Состояние, когда данные при обновлении не изменились.
 /// Используется как сигнал для показа сообщения об актуальности данных.
-class RatesUnchanged extends RatesState {
+final class RatesUnchanged extends RatesState {
   const RatesUnchanged();
 }
 
 /// Состояние ошибки.
-class RatesLoadError extends RatesState {
+final class RatesLoadError extends RatesState {
   final AppFailure failure;
 
   const RatesLoadError(this.failure);
