@@ -25,7 +25,7 @@ class RatesCubit extends Cubit<RatesState> {
   Future<void> _init() async {
     final initialStatus = await _networkService.getCurrentStatus();
     if (initialStatus == ConnectivityResult.none) {
-      emit(RatesFailure(NoNetworkFailure()));
+      emit(RatesLoadError(NoNetworkFailure()));
     } else {
       loadRates();
     }
@@ -34,7 +34,7 @@ class RatesCubit extends Cubit<RatesState> {
       if (status != ConnectivityResult.none) {
         loadRates(isRefresh: true);
       } else {
-        emit(RatesFailure(NoNetworkFailure()));
+        emit(RatesLoadError(NoNetworkFailure()));
       }
     });
   }
@@ -69,7 +69,7 @@ class RatesCubit extends Cubit<RatesState> {
           emit(RatesLoaded(data));
         }
       case Failure(:final error):
-        emit(RatesFailure(error));
+        emit(RatesLoadError(error));
     }
   }
 }

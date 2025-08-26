@@ -36,10 +36,10 @@ class RatesUnchanged extends RatesState {
 }
 
 /// Состояние ошибки.
-class RatesFailure extends RatesState {
+class RatesLoadError extends RatesState {
   final AppFailure failure;
 
-  const RatesFailure(this.failure);
+  const RatesLoadError(this.failure);
 
   @override
   List<Object?> get props => [failure];

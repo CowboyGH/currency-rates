@@ -55,7 +55,7 @@ void main() {
 
   group('RatesCubit.loadRates', () {
     blocTest<RatesCubit, RatesState>(
-      'эмитит [RatesLoading, RatesLoaded] при наличии интернет-соединения',
+      'эмитит $RatesLoading, $RatesLoaded при наличии интернет-соединения',
       build: () {
         when(mockGetRatesUsecase()).thenAnswer((_) async => Success(snapshot));
         return RatesCubit(mockNetworkService, mockGetRatesUsecase);
@@ -72,7 +72,7 @@ void main() {
     );
 
     blocTest<RatesCubit, RatesState>(
-      'эмитит [RatesUnchanged, RatesLoaded] при обновлении без изменения данных после первой загрузки',
+      'эмитит $RatesUnchanged, $RatesLoaded при обновлении без изменения данных после первой загрузки',
       build: () {
         when(mockGetRatesUsecase()).thenAnswer((_) async => Success(snapshot));
         return RatesCubit(mockNetworkService, mockGetRatesUsecase);
@@ -94,7 +94,7 @@ void main() {
     );
 
     blocTest(
-      'эмитит [RatesLoading, RatesFailure] при отсутствии интернет-соединения',
+      'эмитит $RatesLoading, $RatesLoadError при отсутствии интернет-соединения',
       build: () {
         when(mockGetRatesUsecase()).thenAnswer((_) async => Failure(NoNetworkFailure()));
         return RatesCubit(mockNetworkService, mockGetRatesUsecase);
@@ -102,7 +102,7 @@ void main() {
       act: (cubit) async => await cubit.loadRates(),
       expect: () => [
         const RatesLoading(),
-        isA<RatesFailure>().having((s) => s.failure, 'failure', isA<NoNetworkFailure>()),
+        isA<RatesLoadError>().having((s) => s.failure, 'failure', isA<NoNetworkFailure>()),
       ],
       verify: (_) {
         verify(mockGetRatesUsecase()).called(1);
@@ -111,7 +111,7 @@ void main() {
     );
 
     blocTest<RatesCubit, RatesState>(
-      'эмитит [RatesFailure] при старте без сети и [RatesLoaded] после восстановления',
+      'эмитит $RatesLoadError при старте без сети и $RatesLoaded после восстановления',
       build: () {
         when(
           mockNetworkService.getCurrentStatus(),
@@ -123,7 +123,7 @@ void main() {
         connectivityController.add(ConnectivityResult.wifi);
       },
       expect: () => [
-        isA<RatesFailure>().having((s) => s.failure, 'failure', isA<NoNetworkFailure>()),
+        isA<RatesLoadError>().having((s) => s.failure, 'failure', isA<NoNetworkFailure>()),
         const RatesLoaded(snapshot),
       ],
       verify: (_) {
@@ -132,7 +132,7 @@ void main() {
     );
 
     blocTest(
-      'эмитит [RatesLoading, RatesFailure] при неизвестной ошибке сети',
+      'эмитит $RatesLoading, $RatesLoadError при неизвестной ошибке сети',
       build: () {
         when(
           mockGetRatesUsecase(),
@@ -142,7 +142,7 @@ void main() {
       act: (cubit) async => await cubit.loadRates(),
       expect: () => [
         const RatesLoading(),
-        isA<RatesFailure>().having((s) => s.failure, 'failure', isA<UnknownNetworkFailure>()),
+        isA<RatesLoadError>().having((s) => s.failure, 'failure', isA<UnknownNetworkFailure>()),
       ],
       verify: (_) {
         verify(mockGetRatesUsecase()).called(1);
@@ -151,7 +151,7 @@ void main() {
     );
 
     blocTest(
-      'эмитит [RatesLoading, RatesFailure] при неизвестной ошибке',
+      'эмитит $RatesLoading, $RatesLoadError при неизвестной ошибке',
       build: () {
         when(mockGetRatesUsecase()).thenAnswer((_) async => Failure(UnknownFailure()));
         return RatesCubit(mockNetworkService, mockGetRatesUsecase);
@@ -159,7 +159,7 @@ void main() {
       act: (cubit) async => await cubit.loadRates(),
       expect: () => [
         const RatesLoading(),
-        isA<RatesFailure>().having((s) => s.failure, 'failure', isA<UnknownFailure>()),
+        isA<RatesLoadError>().having((s) => s.failure, 'failure', isA<UnknownFailure>()),
       ],
       verify: (_) {
         verify(mockGetRatesUsecase()).called(1);
