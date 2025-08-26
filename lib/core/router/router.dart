@@ -2,8 +2,8 @@ import 'package:currency_rates/features/rates/presentation/currency_rates_screen
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
-  initialLocation: '/rates',
+  initialLocation: '/',
   routes: [
-    GoRoute(path: '/rates', builder: (context, state) => CurrencyRatesScreenBuilder()),
+    GoRoute(path: '/', builder: (context, state) => CurrencyRatesScreenBuilder()),
   ],
 );
