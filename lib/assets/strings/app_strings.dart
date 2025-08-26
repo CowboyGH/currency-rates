@@ -10,6 +10,9 @@ abstract class AppStrings {
   // Список валют
   static const currencyRatesOn = 'Курсы валют на';
 
+  // Меню
+  static const menu = 'Меню';
+
   // О приложении
   static const about = 'О приложении';
 

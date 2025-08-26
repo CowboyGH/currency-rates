@@ -1,4 +1,5 @@
 import 'package:currency_rates/assets/strings/app_strings.dart';
+import 'package:currency_rates/features/common/presentation/widgets/app_drawer.dart';
 import 'package:currency_rates/features/rates/presentation/cubit/rates_cubit.dart';
 import 'package:currency_rates/features/rates/presentation/widgets/currency_card_widget.dart';
 import 'package:currency_rates/features/rates/presentation/widgets/currency_rates_load_error_widget.dart';
@@ -77,6 +78,7 @@ class _CurrencyRatesScreenState extends State<CurrencyRatesScreen> {
           ),
         ),
       ),
+      endDrawer: const AppDrawer(),
       body: BlocListener<RatesCubit, RatesState>(
         listener: (_, state) {
           if (state is RatesUnchanged) {
