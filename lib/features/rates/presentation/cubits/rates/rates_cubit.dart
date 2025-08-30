@@ -16,13 +16,22 @@ part 'rates_state.dart';
 /// Кубит для управления состоянием экрана курсов валют.
 class RatesCubit extends Cubit<RatesState> {
   final NetworkService _networkService;
-  late final StreamSubscription<ConnectivityResult> _subscription;
+  StreamSubscription<ConnectivityResult>? _subscription;
   final GetRatesUsecase _getRates;
-  RatesCubit(this._networkService, this._getRates) : super(const RatesInitial()) {
-    _init();
+  RatesCubit(this._networkService, this._getRates) : super(const RatesInitial());
+
+  bool _isInitialized = false;
+
+  /// Инициализация кубита. Должен быть вызван из UI один раз.
+  Future<void> init() async {
+    // Предотвращаем повторную инициализацию
+    if (_isInitialized) return;
+    _isInitialized = true;
+
+    await _listenToNetworkChanges();
   }
 
-  Future<void> _init() async {
+  Future<void> _listenToNetworkChanges() async {
     final initialStatus = await _networkService.getCurrentStatus();
     if (initialStatus == ConnectivityResult.none) {
       emit(RatesLoadError(NoNetworkFailure()));
@@ -41,7 +50,7 @@ class RatesCubit extends Cubit<RatesState> {
 
   @override
   Future<void> close() {
-    _subscription.cancel();
+    _subscription?.cancel();
     return super.close();
   }
 
