@@ -6,13 +6,8 @@ import 'package:flutter/material.dart';
 /// Виджет ошибки загрузки курсов валют.
 class CurrencyRatesLoadErrorWidget extends StatelessWidget {
   final String? message;
-  final VoidCallback onRetry;
 
-  const CurrencyRatesLoadErrorWidget({
-    super.key,
-    required this.message,
-    required this.onRetry,
-  });
+  const CurrencyRatesLoadErrorWidget({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
