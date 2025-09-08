@@ -24,4 +24,6 @@ class ConversionCubit extends Cubit<ConversionState> {
         emit(ConversionError(error));
     }
   }
+
+  void reset() => emit(ConversionInitial());
 }

@@ -69,6 +69,47 @@ void main() {
           ),
         ],
       );
+
+      blocTest<ConversionCubit, ConversionState>(
+        'эмитит [ConversionInitial] после [ConversionError]',
+        setUp: () {
+          when(
+            mockConvertCurrencyUsecase(amount: amount, unitRate: unitRate),
+          ).thenReturn(Success(expectedResult));
+        },
+        build: () => conversionCubit,
+        act: (cubit) {
+          cubit.convert(amount: amount, unitRate: unitRate);
+          cubit.reset();
+        },
+        expect: () => [
+          isA<ConversionSuccess>().having((s) => s.result, 'result', expectedResult),
+          const ConversionInitial(),
+        ],
+      );
+
+      blocTest<ConversionCubit, ConversionState>(
+        'эмитит [ConversionInitial] после [ConversionError]',
+        setUp: () {
+          final failure = NegativeAmountFailure();
+          when(
+            mockConvertCurrencyUsecase(amount: amount, unitRate: unitRate),
+          ).thenReturn(Failure(failure));
+        },
+        build: () => conversionCubit,
+        act: (cubit) {
+          cubit.convert(amount: amount, unitRate: unitRate);
+          cubit.reset();
+        },
+        expect: () => [
+          isA<ConversionError>().having(
+            (s) => s.failure,
+            'failure',
+            isA<NegativeAmountFailure>(),
+          ),
+          const ConversionInitial(),
+        ],
+      );
     });
   });
 }
