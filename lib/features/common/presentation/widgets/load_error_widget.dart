@@ -3,11 +3,11 @@ import 'package:currency_rates/uikit/themes/colors/app_color_theme.dart';
 import 'package:currency_rates/uikit/themes/text/app_text_theme.dart';
 import 'package:flutter/material.dart';
 
-/// Виджет ошибки загрузки курсов валют.
-class CurrencyRatesLoadErrorWidget extends StatelessWidget {
+/// Виджет ошибки загрузки данных.
+class LoadErrorWidget extends StatelessWidget {
   final String? message;
 
-  const CurrencyRatesLoadErrorWidget({super.key, required this.message});
+  const LoadErrorWidget({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
