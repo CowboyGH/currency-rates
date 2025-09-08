@@ -1,7 +1,10 @@
 import 'package:currency_rates/features/rates/domain/entities/currency_entity.dart';
+import 'package:currency_rates/features/rates/presentation/cubits/conversion/conversion_cubit.dart';
+import 'package:currency_rates/features/rates/presentation/widgets/currency_conversion_dialog.dart';
 import 'package:currency_rates/uikit/themes/colors/app_color_theme.dart';
 import 'package:currency_rates/uikit/themes/text/app_text_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Виджет карточки валюты.
 class CurrencyCardWidget extends StatelessWidget {
@@ -12,74 +15,90 @@ class CurrencyCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorTheme = AppColorTheme.of(context);
     final textTheme = AppTextTheme.of(context);
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      shadowColor: colorTheme.shadow.withValues(alpha: 0.3),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Код валюты с акцентным фоном
-            Container(
-              width: 56,
-              height: 56,
-              decoration: BoxDecoration(
-                color: colorTheme.primary,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                currency.charCode,
-                style: textTheme.number.copyWith(
-                  color: colorTheme.onPrimary,
-                  fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: () => showDialog(
+        context: context,
+        builder: (_) => BlocProvider.value(
+          value: context.read<ConversionCubit>(),
+          child: CurrencyConversionDialog(
+            charCode: currency.charCode,
+            unitRate: currency.unitRate.toString(),
+          ),
+        ),
+        animationStyle: AnimationStyle(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        ),
+      ),
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shadowColor: colorTheme.shadow.withValues(alpha: 0.3),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Код валюты с акцентным фоном
+              Container(
+                width: 56,
+                height: 56,
+                decoration: BoxDecoration(
+                  color: colorTheme.primary,
+                  borderRadius: BorderRadius.circular(16),
                 ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+                alignment: Alignment.center,
+                child: Text(
+                  currency.charCode,
+                  style: textTheme.number.copyWith(
+                    color: colorTheme.onPrimary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-            const SizedBox(width: 16),
-            // Информация о валюте
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    currency.name,
-                    style: textTheme.subtitle.copyWith(
-                      color: colorTheme.onSurface,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '${currency.nominal} ${currency.charCode} = ${currency.value} ₽',
-                    style: textTheme.number.copyWith(
-                      color: colorTheme.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  if (currency.nominal != 1)
+              const SizedBox(width: 16),
+              // Информация о валюте
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                     Text(
-                      '1 ${currency.charCode} = ${currency.unitRate} ₽',
-                      style: textTheme.body.copyWith(
-                        color: colorTheme.onSurface.withValues(alpha: 0.7),
+                      currency.name,
+                      style: textTheme.subtitle.copyWith(
+                        color: colorTheme.onSurface,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '${currency.nominal} ${currency.charCode} = ${currency.value} ₽',
+                      style: textTheme.number.copyWith(
+                        color: colorTheme.primary,
+                        fontWeight: FontWeight.bold,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                ],
+                    const SizedBox(height: 4),
+                    if (currency.nominal != 1)
+                      Text(
+                        '1 ${currency.charCode} = ${currency.unitRate} ₽',
+                        style: textTheme.body.copyWith(
+                          color: colorTheme.onSurface.withValues(alpha: 0.7),
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
