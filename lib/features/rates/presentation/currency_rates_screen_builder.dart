@@ -23,7 +23,7 @@ class CurrencyRatesScreenBuilder extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<RatesRemoteDataSource>(
-          create: (context) => RatesRemoteDataSource(apiClient: di<ApiClient>()),
+          create: (_) => RatesRemoteDataSource(apiClient: di<ApiClient>()),
         ),
         Provider<IRatesRepository>(
           create: (context) =>
@@ -36,11 +36,11 @@ class CurrencyRatesScreenBuilder extends StatelessWidget {
           create: (_) => ConvertCurrencyUsecase(),
         ),
         Provider<Connectivity>(
-          create: (context) => Connectivity(),
+          create: (_) => Connectivity(),
         ),
         Provider<NetworkService>(
           create: (context) => NetworkService(connectivity: context.read<Connectivity>()),
-          dispose: (context, value) => value.dispose(),
+          dispose: (_, value) => value.dispose(),
         ),
         BlocProvider<RatesCubit>(
           create: (context) => RatesCubit(
