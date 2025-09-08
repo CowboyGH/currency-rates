@@ -11,7 +11,7 @@ import 'package:mockito/mockito.dart';
 
 import 'rates_repository_impl_test.mocks.dart';
 
-@GenerateMocks([RatesRemoteDataSource])
+@GenerateNiceMocks([MockSpec<RatesRemoteDataSource>()])
 void main() {
   late RatesRepositoryImpl ratesRepository;
   late RatesRemoteDataSource mockRatesRemoteDataSource;

@@ -9,7 +9,7 @@ import 'package:windows1251/windows1251.dart';
 
 import 'rates_remote_data_source_test.mocks.dart';
 
-@GenerateMocks([ApiClient])
+@GenerateNiceMocks([MockSpec<ApiClient>()])
 void main() {
   late RatesRemoteDataSource ratesRemoteDataSource;
   late MockApiClient mockApiClient;

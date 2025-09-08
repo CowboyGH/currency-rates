@@ -8,7 +8,7 @@ import 'package:mockito/mockito.dart';
 
 import 'network_service_test.mocks.dart';
 
-@GenerateMocks([Connectivity])
+@GenerateNiceMocks([MockSpec<Connectivity>()])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   late MockConnectivity mockConnectivity;
