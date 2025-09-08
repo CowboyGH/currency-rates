@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:currency_rates/assets/strings/app_strings.dart';
 import 'package:currency_rates/features/rates/presentation/cubits/conversion/conversion_cubit.dart';
 import 'package:currency_rates/features/rates/presentation/widgets/currency_section_widget.dart';
 import 'package:currency_rates/uikit/themes/colors/app_color_theme.dart';
@@ -89,7 +90,7 @@ class _CurrencyConversionDialogState extends State<CurrencyConversionDialog> {
   Widget build(BuildContext context) {
     final colorTheme = AppColorTheme.of(context);
     final textTheme = AppTextTheme.of(context);
-    const targetCurrencyCharCode = 'RUB';
+    const targetCurrencyCharCode = AppStrings.ruble;
 
     return BlocListener<ConversionCubit, ConversionState>(
       listener: (_, state) {
@@ -109,7 +110,7 @@ class _CurrencyConversionDialogState extends State<CurrencyConversionDialog> {
             children: [
               Center(
                 child: Text(
-                  'Конвертация',
+                  AppStrings.conversion,
                   style: textTheme.headline.copyWith(color: colorTheme.onSurface),
                   textAlign: TextAlign.center,
                   maxLines: 1,
@@ -165,7 +166,7 @@ class _CurrencyConversionDialogState extends State<CurrencyConversionDialog> {
                   ),
                 ),
                 child: Text(
-                  'Конвертировать',
+                  AppStrings.convert,
                   style: textTheme.button.copyWith(
                     color: _canConvert
                         ? colorTheme.onPrimary

@@ -7,6 +7,11 @@ abstract class AppStrings {
   // Список валют
   static const currencyRatesOn = 'Курсы валют на';
 
+  // Конвертер валют
+  static const conversion = 'Конвертация';
+  static const convert = 'Конвертировать';
+  static const ruble = 'RUB';
+
   // Меню
   static const menu = 'Меню';
 
