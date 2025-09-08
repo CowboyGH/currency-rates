@@ -35,7 +35,7 @@ class _CurrencyRatesScreenState extends State<CurrencyRatesScreen> {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        width: MediaQuery.of(context).size.width * 0.6,
+        width: MediaQuery.sizeOf(context).width * 0.6,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         backgroundColor: colorTheme.primary,
