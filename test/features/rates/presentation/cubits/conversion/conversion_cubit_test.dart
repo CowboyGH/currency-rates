@@ -52,7 +52,7 @@ void main() {
       );
 
       blocTest<ConversionCubit, ConversionState>(
-        'эмитит [ConversionFailure] при ошибке конвертации',
+        'эмитит [ConversionError] при ошибке конвертации',
         setUp: () {
           final failure = NegativeAmountFailure();
           when(
