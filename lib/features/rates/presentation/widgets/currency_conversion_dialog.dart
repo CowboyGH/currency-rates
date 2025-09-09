@@ -70,10 +70,10 @@ class _CurrencyConversionDialogState extends State<CurrencyConversionDialog> {
 
   /// Форматирует число для отображения в UI:
   /// - Если число < 1e-6 → экспоненциальная форма.
-  /// - Иначе → фиксированная форма (7 знаков) с обрезкой незначащих нулей.
+  /// - Иначе → фиксированная форма (2 знаков) с обрезкой незначащих нулей.
   String _formatForDisplay(Decimal number) {
     const double minExponentialThreshold = 1e-6;
-    const int fixedPrecision = 7;
+    const int fixedPrecision = 2;
 
     final doubleValue = number.toDouble();
     if (doubleValue.abs() < minExponentialThreshold) {
