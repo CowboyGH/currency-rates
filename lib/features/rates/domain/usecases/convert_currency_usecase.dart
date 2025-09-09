@@ -19,22 +19,16 @@ class ConvertCurrencyUsecase {
     required Decimal unitRate,
     required Decimal amount,
   }) {
-    try {
-      // Отрицательное значение
-      if (amount < Decimal.zero) return Result.failure(NegativeAmountFailure());
-      // Нулевое значение
-      if (amount == Decimal.zero) return Result.failure(ZeroAmountFailure());
-      // Слишком маленькое значение
-      if (amount < minPositive) return Result.failure(UnderflowFailure());
-      // Слишком большое значение
-      final digitsOnly = amount.toString().replaceAll(RegExp(r'[^0-9]'), '');
-      if (digitsOnly.length > 30) return Result.failure(OverflowFailure());
+    // Отрицательное значение
+    if (amount < Decimal.zero) return Result.failure(NegativeAmountFailure());
+    // Нулевое значение
+    if (amount == Decimal.zero) return Result.failure(ZeroAmountFailure());
+    // Слишком маленькое значение
+    if (amount < minPositive) return Result.failure(UnderflowFailure());
+    // Слишком большое значение
+    final digitsOnly = amount.toString().replaceAll(RegExp(r'[^0-9]'), '');
+    if (digitsOnly.length > 30) return Result.failure(OverflowFailure());
 
-      return Result.success(unitRate * amount);
-    } catch (e) {
-      return Result.failure(
-        UnknownConversionFailure(e is Exception ? e : Exception(e.toString())),
-      );
-    }
+    return Result.success(unitRate * amount);
   }
 }
