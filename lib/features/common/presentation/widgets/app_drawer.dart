@@ -1,4 +1,5 @@
 import 'package:currency_rates/assets/strings/app_strings.dart';
+import 'package:currency_rates/features/common/presentation/widgets/app_drawer_tile.dart';
 import 'package:currency_rates/uikit/themes/colors/app_color_theme.dart';
 import 'package:currency_rates/uikit/themes/text/app_text_theme.dart';
 import 'package:flutter/material.dart';
@@ -35,29 +36,15 @@ class AppDrawer extends StatelessWidget {
               endIndent: 16,
             ),
             // Пункты меню
-            ListTile(
-              leading: Icon(Icons.info_outline, color: colorTheme.onSurface),
-              title: Text(
-                AppStrings.about,
-                style: textTheme.body.copyWith(color: colorTheme.onSurface),
-              ),
-              hoverColor: colorTheme.primary.withValues(alpha: 0.1),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-              onTap: () {
-                context.pop();
-              },
+            AppDrawerTile(
+              title: AppStrings.about,
+              onTap: context.pop,
+              icon: Icons.info_outline,
             ),
-            ListTile(
-              leading: Icon(Icons.history, color: colorTheme.onSurface),
-              title: Text(
-                AppStrings.history,
-                style: textTheme.body.copyWith(color: colorTheme.onSurface),
-              ),
-              hoverColor: colorTheme.primary.withValues(alpha: 0.1),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-              onTap: () {
-                context.pop();
-              },
+            AppDrawerTile(
+              title: AppStrings.history,
+              onTap: context.pop,
+              icon: Icons.history,
             ),
           ],
         ),
