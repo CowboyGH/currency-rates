@@ -30,7 +30,6 @@ class AppDrawer extends StatelessWidget {
             ),
             // Декоративный разделитель
             Divider(
-              color: colorTheme.divider,
               thickness: 1.0,
               indent: 16,
               endIndent: 16,

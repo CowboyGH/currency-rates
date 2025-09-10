@@ -25,6 +25,37 @@ abstract class AppThemeData {
     dividerColor: _lightColorTheme.divider,
     splashFactory: NoSplash.splashFactory,
     extensions: [_lightColorTheme, _textTheme],
+    cardTheme: CardThemeData(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      shadowColor: _lightColorTheme.shadow.withValues(alpha: 0.3),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: _lightColorTheme.onSurface.withValues(alpha: 0.05),
+      border: OutlineInputBorder(
+        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      hintStyle: _textTheme.body.copyWith(
+        color: _lightColorTheme.onSurface.withValues(alpha: 0.5),
+      ),
+      errorStyle: _textTheme.caption.copyWith(
+        color: _lightColorTheme.error,
+        overflow: TextOverflow.ellipsis,
+      ),
+      errorMaxLines: 2,
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: _lightColorTheme.primary,
+        disabledBackgroundColor: _lightColorTheme.disabled,
+        overlayColor: _lightColorTheme.onPrimary.withValues(alpha: 0.1),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+    ),
+    dividerTheme: DividerThemeData(color: _lightColorTheme.divider),
   );
 
   /// Темная тема
@@ -44,5 +75,36 @@ abstract class AppThemeData {
     dividerColor: _darkColorTheme.divider,
     splashFactory: NoSplash.splashFactory,
     extensions: [_darkColorTheme, _textTheme],
+    cardTheme: CardThemeData(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      shadowColor: _darkColorTheme.shadow.withValues(alpha: 0.3),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: _darkColorTheme.onSurface.withValues(alpha: 0.05),
+      border: OutlineInputBorder(
+        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      hintStyle: _textTheme.body.copyWith(
+        color: _darkColorTheme.onSurface.withValues(alpha: 0.5),
+      ),
+      errorStyle: _textTheme.caption.copyWith(
+        color: _darkColorTheme.error,
+        overflow: TextOverflow.ellipsis,
+      ),
+      errorMaxLines: 2,
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: _darkColorTheme.primary,
+        disabledBackgroundColor: _darkColorTheme.disabled,
+        overlayColor: _darkColorTheme.onPrimary.withValues(alpha: 0.1),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+    ),
+    dividerTheme: DividerThemeData(color: _darkColorTheme.divider),
   );
 }

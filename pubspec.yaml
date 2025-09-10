@@ -1,7 +1,7 @@
 name: currency_rates
 description: "Приложение для получения и отображения курсов валют."
 publish_to: 'none'
-version: 0.3.9
+version: 0.3.10
 
 environment:
   sdk: ^3.8.0

@@ -32,8 +32,6 @@ class CurrencyCardWidget extends StatelessWidget {
       ),
       child: Card(
         elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        shadowColor: colorTheme.shadow.withValues(alpha: 0.3),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Row(

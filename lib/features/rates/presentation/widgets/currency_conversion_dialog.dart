@@ -157,14 +157,6 @@ class _CurrencyConversionDialogState extends State<CurrencyConversionDialog> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: _canConvert ? _convert : null,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: colorTheme.primary,
-                  disabledBackgroundColor: colorTheme.disabled,
-                  overlayColor: colorTheme.onPrimary.withValues(alpha: 0.1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
                 child: Text(
                   AppStrings.convert,
                   style: textTheme.button.copyWith(

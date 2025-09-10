@@ -74,24 +74,7 @@ class CurrencySectionWidget extends StatelessWidget {
                     style: textTheme.body.copyWith(color: colorTheme.onSurface),
                     cursorErrorColor: colorTheme.primary,
                     textAlign: TextAlign.right,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: colorTheme.onSurface.withValues(alpha: 0.05),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      hintText: hintText,
-                      hintStyle: textTheme.body.copyWith(
-                        color: colorTheme.onSurface.withValues(alpha: 0.5),
-                      ),
-                      errorText: error,
-                      errorStyle: textTheme.caption.copyWith(
-                        color: colorTheme.error,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      errorMaxLines: 2,
-                    ),
+                    decoration: InputDecoration(hintText: hintText, errorText: error),
                   );
                 },
               ),
