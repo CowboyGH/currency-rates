@@ -3,8 +3,6 @@ import 'package:currency_rates/features/rates/domain/entities/currency_entity.da
 
 extension CurrencyMapper on CurrencyDto {
   CurrencyEntity toEntity() => CurrencyEntity(
-    id: id,
-    numCode: numCode,
     charCode: charCode,
     nominal: nominal,
     name: name,

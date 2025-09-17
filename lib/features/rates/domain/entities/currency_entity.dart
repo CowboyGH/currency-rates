@@ -2,12 +2,6 @@ import 'package:equatable/equatable.dart';
 
 /// Сущность валюты.
 class CurrencyEntity extends Equatable {
-  /// Идентификатор.
-  final String id;
-
-  /// Числовой код.
-  final int numCode;
-
   /// Текстовый код.
   final String charCode;
 
@@ -24,8 +18,6 @@ class CurrencyEntity extends Equatable {
   final double unitRate;
 
   const CurrencyEntity({
-    required this.id,
-    required this.numCode,
     required this.charCode,
     required this.nominal,
     required this.name,
@@ -35,8 +27,6 @@ class CurrencyEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-    id,
-    numCode,
     charCode,
     nominal,
     name,
