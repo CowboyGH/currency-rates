@@ -8,7 +8,7 @@ void main() {
   late RatesSnapshotDto snapshot;
 
   setUp(() {
-    xml = File('test/fixtures/snapshot.xml').readAsStringSync();
+    xml = File('test/fixtures/snapshot/snapshot.xml').readAsStringSync();
     snapshot = RatesSnapshotDto.fromXml(xml);
   });
 
@@ -26,7 +26,7 @@ void main() {
   });
 
   test('парсит пустой список валют', () {
-    final emptyXml = File('test/fixtures/snapshot_empty.xml').readAsStringSync();
+    final emptyXml = File('test/fixtures/snapshot/snapshot_empty.xml').readAsStringSync();
     final emptySnapshot = RatesSnapshotDto.fromXml(emptyXml);
 
     expect(emptySnapshot.currencies, isEmpty);

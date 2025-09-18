@@ -9,7 +9,7 @@ XmlElement parseValute(String xml) => XmlDocument.parse(xml).rootElement;
 void main() {
   group('CurrencyDto.fromXml', () {
     test('парсит валюту из XML', () {
-      final xml = File('test/fixtures/currency.xml').readAsStringSync();
+      final xml = File('test/fixtures/currency/currency.xml').readAsStringSync();
       final currency = CurrencyDto.fromXml(parseValute(xml));
 
       expect(currency.id, equals('R01010'));
@@ -22,7 +22,7 @@ void main() {
     });
 
     test('парсит "." вместо "," в значении валюты', () {
-      final xmlWithDot = File('test/fixtures/currency_with_dot.xml').readAsStringSync();
+      final xmlWithDot = File('test/fixtures/currency/currency_with_dot.xml').readAsStringSync();
 
       final currency = CurrencyDto.fromXml(parseValute(xmlWithDot));
       expect(currency.value, closeTo(52.0546, 0.0001));
