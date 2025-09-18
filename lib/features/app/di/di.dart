@@ -1,13 +1,14 @@
 import 'package:currency_rates/api/services/api_client.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 /// Глобальный экземпляр сервис-локатора GetIt для управления зависимостями.
 final di = GetIt.instance;
 
 /// Инициализирует зависимости приложения с помощью GetIt.
 /// Включает регистрацию слоёв data, domain, presentation.
-void initDi() {
+Future<void> initDi() async {
   // ApiClient
   const sendTimeout = Duration(seconds: 10);
   const connectTimeout = Duration(seconds: 10);
@@ -22,4 +23,8 @@ void initDi() {
 
   final ApiClient apiClient = ApiClient(dio);
   di.registerLazySingleton(() => apiClient);
+
+  // Hive
+  await Hive.initFlutter();
+  await Hive.openBox('history_box_v1');
 }
