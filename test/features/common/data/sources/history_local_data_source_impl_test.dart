@@ -1,3 +1,4 @@
+import 'package:currency_rates/features/common/data/models/conversion_record_dto.dart';
 import 'package:currency_rates/features/common/data/sources/history_local_data_source_impl.dart';
 import 'package:currency_rates/features/common/domain/sources/i_history_local_data_source.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -54,6 +55,26 @@ void main() {
       expect(result.length, 2);
       expect(result[0].charCode, 'USD');
       expect(result[1].charCode, 'EUR');
+    });
+  });
+
+  group('HistoryLocalDataSourceImpl.save', () {
+    test('вызывает add один раз при сохранении одного элемента', () async {
+      // Arrange
+      final dto = ConversionRecordDto(
+        charCode: 'USD',
+        amount: '100',
+        result: '10000',
+        unitRate: '100',
+        timestamp: '2025-09-18T10:05:00Z',
+      );
+      when(mockBox.add(any)).thenAnswer((_) async => 0);
+
+      // Act
+      await historyLocalDataSource.save(dto);
+
+      // Assert
+      verify(mockBox.add(dto.toJson())).called(1);
     });
   });
 }

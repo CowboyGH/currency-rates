@@ -14,8 +14,7 @@ final class HistoryLocalDataSourceImpl implements IHistoryLocalDataSource {
 
   @override
   Future<void> save(ConversionRecordDto dto) async {
-    // TODO: implement save
-    throw UnimplementedError();
+    await _box.add(dto.toJson());
   }
 
   @override
