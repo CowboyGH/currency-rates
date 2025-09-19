@@ -9,8 +9,7 @@ final class HistoryLocalDataSourceImpl implements IHistoryLocalDataSource {
 
   @override
   List<ConversionRecordDto> readAll() {
-    // TODO: implement readAll
-    throw UnimplementedError();
+    return _box.values.map((e) => ConversionRecordDto.fromJson(e)).toList();
   }
 
   @override
