@@ -1,8 +1,13 @@
 import 'package:currency_rates/features/common/data/models/conversion_record_dto.dart';
 
-/// Локальный источник данных о истории конвертаций.
+/// Интерфейс для работы с локальным источником данных истории конвертаций.
 abstract interface class IHistoryLocalDataSource {
+  /// Возвращает все сохранённые записи истории конвертаций из локального хранилища.
   List<ConversionRecordDto> readAll();
+
+  /// Сохраняет запись о конвертации валюты в локальное хранилище.
   Future<void> save(ConversionRecordDto dto);
+
+  /// Экспортирует историю конвертаций в XML-файл и сохраняет его по указанному пути.
   Future<void> exportXml(String path);
 }

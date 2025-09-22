@@ -5,6 +5,7 @@ import 'package:currency_rates/features/common/domain/repositories/i_history_rep
 import 'package:currency_rates/features/common/domain/sources/i_history_local_data_source.dart';
 import 'package:flutter/foundation.dart';
 
+/// Реализация [IHistoryRepository].
 final class HistoryRepositoryImpl implements IHistoryRepository {
   final IHistoryLocalDataSource _localDataSource;
 

@@ -1,8 +1,14 @@
 import 'package:currency_rates/core/domain/entities/result/async_result.dart';
 import 'package:currency_rates/features/common/domain/entities/conversion_record_entity.dart';
 
+/// Интерфейс репозитория для работы с историей конвертаций.
 abstract interface class IHistoryRepository {
+  /// Возвращает список всех записей истории конвертаций.
   AsyncResult<List<ConversionRecordEntity>> getAll();
+
+  /// Сохраняет запись конвертации в историю.
   AsyncResult<void> save(ConversionRecordEntity record);
+
+  /// Экспортирует историю конвертаций в XML-файл по указанному пути.
   AsyncResult<void> exportXml(String path);
 }

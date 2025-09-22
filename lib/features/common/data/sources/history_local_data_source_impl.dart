@@ -5,6 +5,7 @@ import 'package:currency_rates/features/common/data/models/conversion_record_dto
 import 'package:currency_rates/features/common/domain/sources/i_history_local_data_source.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+/// Реализация [IHistoryLocalDataSource].
 final class HistoryLocalDataSourceImpl implements IHistoryLocalDataSource {
   final Box<Map<String, dynamic>> _box;
 
