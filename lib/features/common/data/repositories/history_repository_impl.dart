@@ -57,8 +57,18 @@ final class HistoryRepositoryImpl implements IHistoryRepository {
 
   @override
   AsyncResult<void> exportXml(String path) async {
-    // TODO: implement exportXml
-    throw UnimplementedError();
+    try {
+      await _localDataSource.exportXml(path);
+      return Result.success(null);
+    } on HiveError {
+      final failure = HistoryExportFailure();
+      _debugPrint(failure);
+      return Result.failure(failure);
+    } catch (e, s) {
+      final failure = UnknownFailure(message: e.toString(), stackTrace: s);
+      _debugPrint(failure);
+      return Result.failure(failure);
+    }
   }
 }
 

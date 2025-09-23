@@ -17,3 +17,7 @@ final class HistoryEmptyFailure extends HistoryFailure {
 class HistorySaveFailure extends HistoryFailure {
   const HistorySaveFailure() : super(message: 'Не удалось сохранить запись.');
 }
+
+class HistoryExportFailure extends HistoryFailure {
+  const HistoryExportFailure() : super(message: 'Не удалось экспортировать историю в XML.');
+}

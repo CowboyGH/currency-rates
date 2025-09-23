@@ -154,4 +154,50 @@ void main() {
       verify(historyLocalDataSource.save(dto)).called(1);
     });
   });
+
+  group('HistoryRepositoryImpl.exportXml', () {
+    const String path = 'test';
+
+    test('корректно экспортирует xml по указанному пути', () async {
+      // Arrange
+      when(historyLocalDataSource.exportXml(path)).thenAnswer((_) async {});
+
+      // Act
+      final result = await historyRepository.exportXml(path);
+
+      // Assert
+      expect(result.isSuccess, isTrue);
+      verify(historyLocalDataSource.exportXml(path)).called(1);
+    });
+
+    test('возвращает HistoryExportFailure при ошибке экспорта', () async {
+      // Arrange
+      when(historyLocalDataSource.exportXml(path)).thenThrow(HiveError(''));
+
+      // Act
+      final result = await historyRepository.exportXml(path);
+      final failure = result.failure!;
+
+      // Assert
+      expect(result.isFailure, isTrue);
+      expect(failure, isA<HistoryExportFailure>());
+
+      verify(historyLocalDataSource.exportXml(path)).called(1);
+    });
+
+    test('возвращает UnknownFailure при неизвестной ошибке', () async {
+      // Arrange
+      when(historyLocalDataSource.exportXml(path)).thenThrow(Object());
+
+      // Act
+      final result = await historyRepository.exportXml(path);
+      final failure = result.failure!;
+
+      // Assert
+      expect(result.isFailure, isTrue);
+      expect(failure, isA<UnknownFailure>());
+
+      verify(historyLocalDataSource.exportXml(path)).called(1);
+    });
+  });
 }
