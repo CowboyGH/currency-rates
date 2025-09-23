@@ -4,6 +4,7 @@ import 'package:currency_rates/core/domain/entities/failure/unknown_failure.dart
 import 'package:currency_rates/core/domain/entities/result/async_result.dart';
 import 'package:currency_rates/core/domain/entities/result/result.dart';
 import 'package:currency_rates/features/common/data/mappers/conversion_record_dto_mapper.dart';
+import 'package:currency_rates/features/common/data/mappers/conversion_record_entity_mapper.dart';
 import 'package:currency_rates/features/common/domain/entities/conversion_record_entity.dart';
 import 'package:currency_rates/features/common/domain/repositories/i_history_repository.dart';
 import 'package:currency_rates/features/common/domain/sources/i_history_local_data_source.dart';
@@ -40,8 +41,18 @@ final class HistoryRepositoryImpl implements IHistoryRepository {
 
   @override
   AsyncResult<void> save(ConversionRecordEntity record) async {
-    // TODO: implement save
-    throw UnimplementedError();
+    try {
+      await _localDataSource.save(record.toDto());
+      return Result.success(null);
+    } on HiveError {
+      final failure = HistorySaveFailure();
+      _debugPrint(failure);
+      return Result.failure(failure);
+    } catch (e, s) {
+      final failure = UnknownFailure(message: e.toString(), stackTrace: s);
+      _debugPrint(failure);
+      return Result.failure(failure);
+    }
   }
 
   @override

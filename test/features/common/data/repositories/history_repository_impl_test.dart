@@ -1,7 +1,10 @@
 import 'package:currency_rates/core/domain/entities/failure/history/history_failure.dart';
 import 'package:currency_rates/core/domain/entities/failure/unknown_failure.dart';
+import 'package:currency_rates/features/common/data/mappers/conversion_record_dto_mapper.dart';
+import 'package:currency_rates/features/common/data/mappers/conversion_record_entity_mapper.dart';
 import 'package:currency_rates/features/common/data/models/conversion_record_dto.dart';
 import 'package:currency_rates/features/common/data/repositories/history_repository_impl.dart';
+import 'package:currency_rates/features/common/domain/entities/conversion_record_entity.dart';
 import 'package:currency_rates/features/common/domain/repositories/i_history_repository.dart';
 import 'package:currency_rates/features/common/domain/sources/i_history_local_data_source.dart';
 import 'package:decimal/decimal.dart';
@@ -91,6 +94,64 @@ void main() {
       expect(failure, isA<UnknownFailure>());
 
       verify(historyLocalDataSource.readAll()).called(1);
+    });
+  });
+
+  group('HistoryRepositoryImpl.save', () {
+    late ConversionRecordEntity entity;
+    late ConversionRecordDto dto;
+
+    setUp(() {
+      entity = ConversionRecordEntity(
+        charCode: 'USD',
+        amount: Decimal.parse('100'),
+        result: Decimal.parse('10000'),
+        unitRate: Decimal.parse('100'),
+        timestamp: DateTime.parse('2025-09-18T10:05:00Z'),
+      );
+      dto = entity.toDto();
+    });
+
+    test('корректно сохраняет запись конвертации', () async {
+      // Arrange
+      when(historyLocalDataSource.save(dto)).thenAnswer((_) async {});
+
+      // Act
+      final result = await historyRepository.save(entity);
+
+      // Assert
+      expect(result.isSuccess, isTrue);
+      verify(historyLocalDataSource.save(dto)).called(1);
+    });
+
+    test('возвращает HistorySaveFailure при ошибке сохранения', () async {
+      // Arrange
+      when(historyLocalDataSource.save(dto)).thenThrow(HiveError(''));
+
+      // Act
+      final result = await historyRepository.save(dto.toEntity());
+      final failure = result.failure!;
+
+      // Assert
+      expect(result.isFailure, isTrue);
+      expect(failure, isA<HistorySaveFailure>());
+
+      verify(historyLocalDataSource.save(dto)).called(1);
+    });
+
+    test('возвращает UnknownFailure при неизвестной ошибке', () async {
+      // Arrange
+      when(historyLocalDataSource.save(dto)).thenThrow(Object());
+
+      // Act
+      final result = await historyRepository.save(dto.toEntity());
+      final failure = result.failure!;
+
+      // Assert
+      expect(result.isFailure, isTrue);
+      expect(failure, isA<UnknownFailure>());
+
+      verify(historyLocalDataSource.save(dto)).called(1);
     });
   });
 }

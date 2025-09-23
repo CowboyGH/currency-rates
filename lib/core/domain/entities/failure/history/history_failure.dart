@@ -13,3 +13,7 @@ class HistoryStorageFailure extends HistoryFailure {
 final class HistoryEmptyFailure extends HistoryFailure {
   const HistoryEmptyFailure() : super(message: 'История операций пуста.');
 }
+
+class HistorySaveFailure extends HistoryFailure {
+  const HistorySaveFailure() : super(message: 'Не удалось сохранить запись.');
+}
