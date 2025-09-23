@@ -5,3 +5,11 @@ import 'package:flutter/foundation.dart';
 sealed class HistoryFailure extends AppFailure {
   const HistoryFailure({super.message, super.parentException, super.stackTrace});
 }
+
+class HistoryStorageFailure extends HistoryFailure {
+  const HistoryStorageFailure() : super(message: 'Ошибка доступа к локальному хранилищу.');
+}
+
+final class HistoryEmptyFailure extends HistoryFailure {
+  const HistoryEmptyFailure() : super(message: 'История операций пуста.');
+}
