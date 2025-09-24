@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:currency_rates/core/domain/entities/failure/history/history_failure.dart';
+import 'package:currency_rates/core/domain/entities/failure/unknown_failure.dart';
 import 'package:currency_rates/features/common/data/mappers/conversion_history_xml_mapper.dart';
 import 'package:currency_rates/features/common/data/models/conversion_record_dto.dart';
 import 'package:currency_rates/features/common/domain/sources/i_history_local_data_source.dart';
@@ -13,20 +15,44 @@ final class HistoryLocalDataSourceImpl implements IHistoryLocalDataSource {
 
   @override
   List<ConversionRecordDto> readAll() {
-    return _box.values.map((e) => ConversionRecordDto.fromJson(e)).toList();
+    try {
+      return _box.values.map((e) => ConversionRecordDto.fromJson(e)).toList();
+    } on HiveError catch (e, s) {
+      throw HistoryStorageFailure(parentException: e, stackTrace: s);
+    } catch (e, s) {
+      throw UnknownFailure(
+        message: 'Неожиданная ошибка при получении истории',
+        stackTrace: s,
+      );
+    }
   }
 
   @override
   Future<void> save(ConversionRecordDto dto) async {
-    await _box.add(dto.toJson());
+    try {
+      await _box.add(dto.toJson());
+    } on HiveError catch (e, s) {
+      throw HistorySaveFailure(parentException: e, stackTrace: s);
+    } catch (e, s) {
+      throw UnknownFailure(
+        message: 'Неожиданная ошибка при сохранении записи',
+        stackTrace: s,
+      );
+    }
   }
 
   @override
   Future<void> exportXml(String path) async {
     final records = readAll();
-    final xml = records.toXml();
-
-    final file = File(path);
-    await file.writeAsString(xml);
+    try {
+      final xml = records.toXml();
+      final file = File(path);
+      await file.writeAsString(xml);
+    } catch (e, s) {
+      throw UnknownFailure(
+        message: 'Неожиданная ошибка при экспорте данных',
+        stackTrace: s,
+      );
+    }
   }
 }

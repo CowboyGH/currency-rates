@@ -1,3 +1,4 @@
+import 'package:currency_rates/core/domain/entities/failure/app_failure.dart';
 import 'package:currency_rates/core/domain/entities/failure/history/history_failure.dart';
 import 'package:currency_rates/core/domain/entities/failure/unknown_failure.dart';
 import 'package:currency_rates/features/common/data/mappers/conversion_record_dto_mapper.dart';
@@ -9,7 +10,6 @@ import 'package:currency_rates/features/common/domain/repositories/i_history_rep
 import 'package:currency_rates/features/common/domain/sources/i_history_local_data_source.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -66,9 +66,9 @@ void main() {
       verify(historyLocalDataSource.readAll()).called(1);
     });
 
-    test('возвращает HistoryStorageFailure при ошибке локального хранилища', () async {
+    test('возвращает HistoryFailure при ошибке чтения данных', () async {
       // Arrange
-      when(historyLocalDataSource.readAll()).thenThrow(HiveError(''));
+      when(historyLocalDataSource.readAll()).thenThrow(HistoryStorageFailure());
 
       // Act
       final result = await historyRepository.getAll();
@@ -76,14 +76,14 @@ void main() {
 
       // Assert
       expect(result.isFailure, isTrue);
-      expect(failure, isA<HistoryStorageFailure>());
+      expect(failure, isA<HistoryFailure>());
 
       verify(historyLocalDataSource.readAll()).called(1);
     });
 
-    test('возвращает UnknownFailure при неизвестной ошибке', () async {
+    test('возвращает AppFailure при неизвестной ошибке источника данных', () async {
       // Arrange
-      when(historyLocalDataSource.readAll()).thenThrow(Object());
+      when(historyLocalDataSource.readAll()).thenThrow(UnknownFailure());
 
       // Act
       final result = await historyRepository.getAll();
@@ -91,7 +91,7 @@ void main() {
 
       // Assert
       expect(result.isFailure, isTrue);
-      expect(failure, isA<UnknownFailure>());
+      expect(failure, isA<AppFailure>());
 
       verify(historyLocalDataSource.readAll()).called(1);
     });
@@ -124,9 +124,9 @@ void main() {
       verify(historyLocalDataSource.save(dto)).called(1);
     });
 
-    test('возвращает HistorySaveFailure при ошибке сохранения', () async {
+    test('возвращает HistoryFailure при ошибке сохранения данных', () async {
       // Arrange
-      when(historyLocalDataSource.save(dto)).thenThrow(HiveError(''));
+      when(historyLocalDataSource.save(dto)).thenThrow(HistorySaveFailure());
 
       // Act
       final result = await historyRepository.save(dto.toEntity());
@@ -134,14 +134,14 @@ void main() {
 
       // Assert
       expect(result.isFailure, isTrue);
-      expect(failure, isA<HistorySaveFailure>());
+      expect(failure, isA<HistoryFailure>());
 
       verify(historyLocalDataSource.save(dto)).called(1);
     });
 
-    test('возвращает UnknownFailure при неизвестной ошибке', () async {
+    test('возвращает AppFailure при неизвестной ошибке источника данных', () async {
       // Arrange
-      when(historyLocalDataSource.save(dto)).thenThrow(Object());
+      when(historyLocalDataSource.save(dto)).thenThrow(UnknownFailure());
 
       // Act
       final result = await historyRepository.save(dto.toEntity());
@@ -170,9 +170,9 @@ void main() {
       verify(historyLocalDataSource.exportXml(path)).called(1);
     });
 
-    test('возвращает HistoryExportFailure при ошибке экспорта', () async {
+    test('возвращает HistoryFailure при ошибке экспорта данных', () async {
       // Arrange
-      when(historyLocalDataSource.exportXml(path)).thenThrow(HiveError(''));
+      when(historyLocalDataSource.exportXml(path)).thenThrow(HistoryExportFailure());
 
       // Act
       final result = await historyRepository.exportXml(path);
@@ -185,9 +185,9 @@ void main() {
       verify(historyLocalDataSource.exportXml(path)).called(1);
     });
 
-    test('возвращает UnknownFailure при неизвестной ошибке', () async {
+    test('возвращает AppFailure при неизвестной ошибке источника данных', () async {
       // Arrange
-      when(historyLocalDataSource.exportXml(path)).thenThrow(Object());
+      when(historyLocalDataSource.exportXml(path)).thenThrow(UnknownFailure());
 
       // Act
       final result = await historyRepository.exportXml(path);

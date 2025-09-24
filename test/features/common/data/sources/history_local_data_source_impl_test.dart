@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:currency_rates/core/domain/entities/failure/history/history_failure.dart';
+import 'package:currency_rates/core/domain/entities/failure/unknown_failure.dart';
 import 'package:currency_rates/features/common/data/models/conversion_record_dto.dart';
 import 'package:currency_rates/features/common/data/sources/history_local_data_source_impl.dart';
 import 'package:currency_rates/features/common/domain/sources/i_history_local_data_source.dart';
@@ -66,18 +68,45 @@ void main() {
       expect(result[0].charCode, 'USD');
       expect(result[1].charCode, 'EUR');
     });
+
+    test('возвращает HistoryStorageFailure при ошибке локального хранилища', () async {
+      // Arrange
+      when(mockBox.values).thenThrow(HiveError(''));
+
+      // Act & Assert
+      expect(
+        () => historyLocalDataSource.readAll(),
+        throwsA(isA<HistoryStorageFailure>()),
+      );
+    });
+
+    test('возвращает UnknownFailure при неизвестной ошибке', () async {
+      // Arrange
+      when(mockBox.values).thenThrow(Object());
+
+      // Act & Assert
+      expect(
+        () => historyLocalDataSource.readAll(),
+        throwsA(isA<UnknownFailure>()),
+      );
+    });
   });
 
   group('HistoryLocalDataSourceImpl.save', () {
-    test('вызывает add один раз при сохранении одного элемента', () async {
-      // Arrange
-      final dto = ConversionRecordDto(
+    late ConversionRecordDto dto;
+
+    setUp(() {
+      dto = ConversionRecordDto(
         charCode: 'USD',
         amount: '100',
         result: '10000',
         unitRate: '100',
         timestamp: '2025-09-18T10:05:00Z',
       );
+    });
+
+    test('вызывает add один раз при сохранении одного элемента', () async {
+      // Arrange
       when(mockBox.add(any)).thenAnswer((_) async => 0);
 
       // Act
@@ -85,6 +114,28 @@ void main() {
 
       // Assert
       verify(mockBox.add(dto.toJson())).called(1);
+    });
+
+    test('возвращает HistorySaveFailure при ошибке сохранения', () async {
+      // Arrange
+      when(mockBox.add(any)).thenThrow(HiveError(''));
+
+      // Act & Assert
+      expect(
+        () => historyLocalDataSource.save(dto),
+        throwsA(isA<HistorySaveFailure>()),
+      );
+    });
+
+    test('возвращает UnknownFailure при неизвестной ошибке', () async {
+      // Arrange
+      when(mockBox.add(any)).thenThrow(Object());
+
+      // Act & Assert
+      expect(
+        () => historyLocalDataSource.save(dto),
+        throwsA(isA<UnknownFailure>()),
+      );
     });
   });
 
@@ -157,6 +208,19 @@ void main() {
       expect(content, contains('<History>'));
       expect(content, contains('</History>'));
       expect(content, isNot(contains('<Record>')));
+    });
+
+    test('возвращает UnknownFailure при неизвестной ошибке', () async {
+      // Arrange
+      when(mockBox.values).thenThrow(Object());
+
+      final filePath = '${tempDir.path}/test_unknown_failure.xml';
+
+      // Act & Assert
+      expect(
+        () => historyLocalDataSource.exportXml(filePath),
+        throwsA(isA<UnknownFailure>()),
+      );
     });
   });
 }
