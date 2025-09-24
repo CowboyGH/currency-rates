@@ -1,11 +1,13 @@
 import 'package:currency_rates/core/domain/entities/failure/app_failure.dart';
 import 'package:flutter/foundation.dart';
 
+/// Базовый класс для ошибок, связанных с историей конвертаций.
 @immutable
 sealed class HistoryFailure extends AppFailure {
   const HistoryFailure({super.message, super.parentException, super.stackTrace});
 }
 
+/// Ошибка доступа к локальному хранилищу истории.
 class HistoryStorageFailure extends HistoryFailure {
   const HistoryStorageFailure({
     super.parentException,
@@ -13,6 +15,7 @@ class HistoryStorageFailure extends HistoryFailure {
   }) : super(message: 'Ошибка доступа к локальному хранилищу');
 }
 
+/// Ошибка, возникающая если история операций пуста.
 final class HistoryEmptyFailure extends HistoryFailure {
   const HistoryEmptyFailure({
     super.parentException,
@@ -20,6 +23,7 @@ final class HistoryEmptyFailure extends HistoryFailure {
   }) : super(message: 'История операций пуста');
 }
 
+/// Ошибка при попытке сохранить запись в историю.
 class HistorySaveFailure extends HistoryFailure {
   const HistorySaveFailure({
     super.parentException,
@@ -27,6 +31,7 @@ class HistorySaveFailure extends HistoryFailure {
   }) : super(message: 'Не удалось сохранить запись');
 }
 
+/// Ошибка при экспорте истории в XML-файл.
 class HistoryExportFailure extends HistoryFailure {
   const HistoryExportFailure({
     super.parentException,
