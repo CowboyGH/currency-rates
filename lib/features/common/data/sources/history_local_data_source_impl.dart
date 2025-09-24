@@ -48,6 +48,8 @@ final class HistoryLocalDataSourceImpl implements IHistoryLocalDataSource {
       final xml = records.toXml();
       final file = File(path);
       await file.writeAsString(xml);
+    } on FileSystemException catch (e, s) {
+      throw HistoryExportFailure(parentException: e, stackTrace: s);
     } catch (e, s) {
       throw UnknownFailure(
         message: 'Неожиданная ошибка при экспорте данных',

@@ -210,6 +210,17 @@ void main() {
       expect(content, isNot(contains('<Record>')));
     });
 
+    test('возвращает HistoryExportFailure при ошибке записи XML в файл', () async {
+      // Arrange
+      final filePath = '/non-existent_directory/test_export_failure.xml';
+
+      // Act & Assert
+      expect(
+        () => historyLocalDataSource.exportXml(filePath),
+        throwsA(isA<HistoryExportFailure>()),
+      );
+    });
+
     test('возвращает UnknownFailure при неизвестной ошибке', () async {
       // Arrange
       when(mockBox.values).thenThrow(Object());
