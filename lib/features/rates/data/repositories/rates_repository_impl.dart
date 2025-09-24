@@ -4,7 +4,7 @@ import 'package:currency_rates/core/domain/entities/failure/network/network_fail
 import 'package:currency_rates/core/domain/entities/failure/unknown_failure.dart';
 import 'package:currency_rates/core/domain/entities/result/async_result.dart';
 import 'package:currency_rates/core/domain/entities/result/result.dart';
-import 'package:currency_rates/features/rates/data/sources/rates_remote_data_source.dart';
+import 'package:currency_rates/features/rates/data/sources/rates_remote_data_source_impl.dart';
 import 'package:currency_rates/features/rates/domain/entities/rates_snapshot_entity.dart';
 import 'package:currency_rates/features/rates/domain/repositories/i_rates_repository.dart';
 import 'package:dio/dio.dart';
@@ -12,9 +12,9 @@ import 'package:flutter/foundation.dart';
 
 /// Реализация [IRatesRepository].
 final class RatesRepositoryImpl implements IRatesRepository {
-  final RatesRemoteDataSource _remoteDataSource;
+  final RatesRemoteDataSourceImpl _remoteDataSource;
 
-  RatesRepositoryImpl({required RatesRemoteDataSource remoteDataSource})
+  RatesRepositoryImpl({required RatesRemoteDataSourceImpl remoteDataSource})
     : _remoteDataSource = remoteDataSource;
 
   @override

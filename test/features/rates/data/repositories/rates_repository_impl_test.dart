@@ -3,7 +3,7 @@ import 'package:currency_rates/api/data/rates_snapshot_dto.dart';
 import 'package:currency_rates/core/domain/entities/failure/network/network_failure.dart';
 import 'package:currency_rates/core/domain/entities/failure/unknown_failure.dart';
 import 'package:currency_rates/features/rates/data/repositories/rates_repository_impl.dart';
-import 'package:currency_rates/features/rates/data/sources/rates_remote_data_source.dart';
+import 'package:currency_rates/features/rates/data/sources/rates_remote_data_source_impl.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -11,10 +11,10 @@ import 'package:mockito/mockito.dart';
 
 import 'rates_repository_impl_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<RatesRemoteDataSource>()])
+@GenerateNiceMocks([MockSpec<RatesRemoteDataSourceImpl>()])
 void main() {
   late RatesRepositoryImpl ratesRepository;
-  late RatesRemoteDataSource mockRatesRemoteDataSource;
+  late RatesRemoteDataSourceImpl mockRatesRemoteDataSource;
   const RatesSnapshotDto snapshotDto = RatesSnapshotDto(
     date: '16.08.2025',
     name: 'Foreign Currency Market',

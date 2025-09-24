@@ -1,5 +1,6 @@
 import 'package:currency_rates/api/services/api_client.dart';
-import 'package:currency_rates/features/rates/data/sources/rates_remote_data_source.dart';
+import 'package:currency_rates/features/rates/data/sources/rates_remote_data_source_impl.dart';
+import 'package:currency_rates/features/rates/domain/sources/i_rates_remote_data_source.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -7,11 +8,11 @@ import 'package:mockito/mockito.dart';
 import 'package:retrofit/dio.dart';
 import 'package:windows1251/windows1251.dart';
 
-import 'rates_remote_data_source_test.mocks.dart';
+import 'rates_remote_data_source_impl_test.mocks.dart';
 
 @GenerateNiceMocks([MockSpec<ApiClient>()])
 void main() {
-  late RatesRemoteDataSource ratesRemoteDataSource;
+  late IRatesRemoteDataSource ratesRemoteDataSource;
   late MockApiClient mockApiClient;
   const xml = '''
 <ValCurs Date="16.08.2025" name="Foreign Currency Market">
@@ -41,7 +42,7 @@ void main() {
 
   setUp(() {
     mockApiClient = MockApiClient();
-    ratesRemoteDataSource = RatesRemoteDataSource(apiClient: mockApiClient);
+    ratesRemoteDataSource = RatesRemoteDataSourceImpl(apiClient: mockApiClient);
   });
   group('RatesRemoteDataSource', () {
     test('возвращает Snapshot при успешном ответе API', () async {

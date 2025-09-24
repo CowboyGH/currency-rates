@@ -1,14 +1,15 @@
 import 'package:currency_rates/api/data/rates_snapshot_dto.dart';
 import 'package:currency_rates/api/services/api_client.dart';
+import 'package:currency_rates/features/rates/domain/sources/i_rates_remote_data_source.dart';
 import 'package:windows1251/windows1251.dart';
 
-/// Удаленный источник данных о курсах.
-class RatesRemoteDataSource {
+/// Реализация [IRatesRemoteDataSource].
+class RatesRemoteDataSourceImpl implements IRatesRemoteDataSource {
   final ApiClient apiClient;
 
-  const RatesRemoteDataSource({required this.apiClient});
+  const RatesRemoteDataSourceImpl({required this.apiClient});
 
-  /// Получает список валют из внешнего [ApiClient].
+  @override
   Future<RatesSnapshotDto> getRates() async {
     final response = await apiClient.getCurrencies();
     final xml = windows1251.decode(response.data);

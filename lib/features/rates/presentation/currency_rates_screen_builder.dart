@@ -3,7 +3,7 @@ import 'package:currency_rates/api/services/api_client.dart';
 import 'package:currency_rates/core/services/network_service.dart';
 import 'package:currency_rates/features/app/di/di.dart';
 import 'package:currency_rates/features/rates/data/repositories/rates_repository_impl.dart';
-import 'package:currency_rates/features/rates/data/sources/rates_remote_data_source.dart';
+import 'package:currency_rates/features/rates/data/sources/rates_remote_data_source_impl.dart';
 import 'package:currency_rates/features/rates/domain/repositories/i_rates_repository.dart';
 import 'package:currency_rates/features/rates/domain/usecases/convert_currency_usecase.dart';
 import 'package:currency_rates/features/rates/domain/usecases/get_rates_usecase.dart';
@@ -22,12 +22,12 @@ class CurrencyRatesScreenBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<RatesRemoteDataSource>(
-          create: (_) => RatesRemoteDataSource(apiClient: di<ApiClient>()),
+        Provider<RatesRemoteDataSourceImpl>(
+          create: (_) => RatesRemoteDataSourceImpl(apiClient: di<ApiClient>()),
         ),
         Provider<IRatesRepository>(
           create: (context) =>
-              RatesRepositoryImpl(remoteDataSource: context.read<RatesRemoteDataSource>()),
+              RatesRepositoryImpl(remoteDataSource: context.read<RatesRemoteDataSourceImpl>()),
         ),
         Provider<GetRatesUsecase>(
           create: (context) => GetRatesUsecase(repository: context.read<IRatesRepository>()),
