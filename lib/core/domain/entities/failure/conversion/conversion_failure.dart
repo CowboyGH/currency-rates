@@ -21,11 +21,3 @@ final class OverflowFailure extends ConversionFailure {
 final class UnderflowFailure extends ConversionFailure {
   const UnderflowFailure() : super(message: 'Сумма слишком мала');
 }
-
-final class UnknownConversionFailure extends ConversionFailure {
-  const UnknownConversionFailure(Exception exception)
-    : super(
-        message: 'Неизвестная ошибка конвертации',
-        parentException: exception,
-      );
-}
