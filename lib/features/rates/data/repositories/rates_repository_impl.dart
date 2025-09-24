@@ -14,7 +14,7 @@ import 'package:flutter/foundation.dart';
 final class RatesRepositoryImpl implements IRatesRepository {
   final RatesRemoteDataSource _remoteDataSource;
 
-  const RatesRepositoryImpl({required RatesRemoteDataSource remoteDataSource})
+  RatesRepositoryImpl({required RatesRemoteDataSource remoteDataSource})
     : _remoteDataSource = remoteDataSource;
 
   @override
@@ -34,7 +34,10 @@ final class RatesRepositoryImpl implements IRatesRepository {
       _debugPrint(failure);
       return Result.failure(failure);
     } catch (e, s) {
-      final failure = UnknownFailure(message: e.toString(), stackTrace: s);
+      final failure = UnknownFailure(
+        message: 'Неожиданная ошибка при загрузке курсов валют.',
+        stackTrace: s,
+      );
       _debugPrint(failure);
       return Result.failure(failure);
     }
