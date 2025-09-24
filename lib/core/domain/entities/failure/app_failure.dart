@@ -6,10 +6,10 @@ abstract class AppFailure implements Exception {
   /// Сообщение ошибки.
   final String? message;
 
-  /// Родительский [Exception], если имеется.
+  /// Родительское исключение ([Exception] или [Error]), если имеется.
   ///
-  /// Для корректной фиксации логов.
-  final Exception? parentException;
+  /// Сохраняется как [Object], чтобы покрывать все возможные типы.
+  final Object? parentException;
 
   /// [StackTrace] родительской ошибки, если есть.
   final StackTrace? stackTrace;
