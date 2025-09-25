@@ -4,11 +4,11 @@ import 'package:currency_rates/features/common/domain/entities/conversion_record
 /// Интерфейс репозитория для работы с историей конвертаций.
 abstract interface class IHistoryRepository {
   /// Возвращает список всех записей истории конвертаций.
-  AsyncResult<List<ConversionRecordEntity>> getAll();
+  AsyncResult<List<ConversionRecordEntity>> getAllRecords();
 
   /// Сохраняет запись конвертации в историю.
-  AsyncResult<void> save(ConversionRecordEntity record);
+  AsyncResult<void> saveRecord(ConversionRecordEntity record);
 
   /// Экспортирует историю конвертаций в XML-файл по указанному пути.
-  AsyncResult<void> exportXml(String path);
+  AsyncResult<void> exportHistoryToXml(String path);
 }

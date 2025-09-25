@@ -35,12 +35,12 @@ void main() {
         unitRate: '100',
         timestamp: '2025-09-18T10:05:00Z',
       );
-      when(historyLocalDataSource.readAll()).thenAnswer(
+      when(historyLocalDataSource.readAllRecords()).thenAnswer(
         (_) => <ConversionRecordDto>[dto],
       );
 
       // Act
-      final result = await historyRepository.getAll();
+      final result = await historyRepository.getAllRecords();
       final entities = result.success!;
 
       // Assert
@@ -48,52 +48,52 @@ void main() {
       expect(entities[0].charCode, 'USD');
       expect(entities[0].result, Decimal.fromInt(10000));
 
-      verify(historyLocalDataSource.readAll()).called(1);
+      verify(historyLocalDataSource.readAllRecords()).called(1);
     });
 
     test('возвращает HistoryEmptyFailure при пустом списке', () async {
       // Arrange
-      when(historyLocalDataSource.readAll()).thenAnswer((_) => <ConversionRecordDto>[]);
+      when(historyLocalDataSource.readAllRecords()).thenAnswer((_) => <ConversionRecordDto>[]);
 
       // Act
-      final result = await historyRepository.getAll();
+      final result = await historyRepository.getAllRecords();
       final failure = result.failure!;
 
       // Assert
       expect(result.isFailure, isTrue);
       expect(failure, isA<HistoryEmptyFailure>());
 
-      verify(historyLocalDataSource.readAll()).called(1);
+      verify(historyLocalDataSource.readAllRecords()).called(1);
     });
 
     test('возвращает HistoryFailure при ошибке чтения данных', () async {
       // Arrange
-      when(historyLocalDataSource.readAll()).thenThrow(HistoryStorageFailure());
+      when(historyLocalDataSource.readAllRecords()).thenThrow(HistoryStorageFailure());
 
       // Act
-      final result = await historyRepository.getAll();
+      final result = await historyRepository.getAllRecords();
       final failure = result.failure!;
 
       // Assert
       expect(result.isFailure, isTrue);
       expect(failure, isA<HistoryFailure>());
 
-      verify(historyLocalDataSource.readAll()).called(1);
+      verify(historyLocalDataSource.readAllRecords()).called(1);
     });
 
     test('возвращает AppFailure при неизвестной ошибке источника данных', () async {
       // Arrange
-      when(historyLocalDataSource.readAll()).thenThrow(UnknownFailure());
+      when(historyLocalDataSource.readAllRecords()).thenThrow(UnknownFailure());
 
       // Act
-      final result = await historyRepository.getAll();
+      final result = await historyRepository.getAllRecords();
       final failure = result.failure!;
 
       // Assert
       expect(result.isFailure, isTrue);
       expect(failure, isA<AppFailure>());
 
-      verify(historyLocalDataSource.readAll()).called(1);
+      verify(historyLocalDataSource.readAllRecords()).called(1);
     });
   });
 
@@ -114,44 +114,44 @@ void main() {
 
     test('корректно сохраняет запись конвертации', () async {
       // Arrange
-      when(historyLocalDataSource.save(dto)).thenAnswer((_) async {});
+      when(historyLocalDataSource.saveRecord(dto)).thenAnswer((_) async {});
 
       // Act
-      final result = await historyRepository.save(entity);
+      final result = await historyRepository.saveRecord(entity);
 
       // Assert
       expect(result.isSuccess, isTrue);
-      verify(historyLocalDataSource.save(dto)).called(1);
+      verify(historyLocalDataSource.saveRecord(dto)).called(1);
     });
 
     test('возвращает HistoryFailure при ошибке сохранения данных', () async {
       // Arrange
-      when(historyLocalDataSource.save(dto)).thenThrow(HistorySaveFailure());
+      when(historyLocalDataSource.saveRecord(dto)).thenThrow(HistorySaveFailure());
 
       // Act
-      final result = await historyRepository.save(dto.toEntity());
+      final result = await historyRepository.saveRecord(dto.toEntity());
       final failure = result.failure!;
 
       // Assert
       expect(result.isFailure, isTrue);
       expect(failure, isA<HistoryFailure>());
 
-      verify(historyLocalDataSource.save(dto)).called(1);
+      verify(historyLocalDataSource.saveRecord(dto)).called(1);
     });
 
     test('возвращает AppFailure при неизвестной ошибке источника данных', () async {
       // Arrange
-      when(historyLocalDataSource.save(dto)).thenThrow(UnknownFailure());
+      when(historyLocalDataSource.saveRecord(dto)).thenThrow(UnknownFailure());
 
       // Act
-      final result = await historyRepository.save(dto.toEntity());
+      final result = await historyRepository.saveRecord(dto.toEntity());
       final failure = result.failure!;
 
       // Assert
       expect(result.isFailure, isTrue);
       expect(failure, isA<UnknownFailure>());
 
-      verify(historyLocalDataSource.save(dto)).called(1);
+      verify(historyLocalDataSource.saveRecord(dto)).called(1);
     });
   });
 
@@ -160,44 +160,44 @@ void main() {
 
     test('корректно экспортирует xml по указанному пути', () async {
       // Arrange
-      when(historyLocalDataSource.exportXml(path)).thenAnswer((_) async {});
+      when(historyLocalDataSource.exportRecordsToXml(path)).thenAnswer((_) async {});
 
       // Act
-      final result = await historyRepository.exportXml(path);
+      final result = await historyRepository.exportHistoryToXml(path);
 
       // Assert
       expect(result.isSuccess, isTrue);
-      verify(historyLocalDataSource.exportXml(path)).called(1);
+      verify(historyLocalDataSource.exportRecordsToXml(path)).called(1);
     });
 
     test('возвращает HistoryFailure при ошибке экспорта данных', () async {
       // Arrange
-      when(historyLocalDataSource.exportXml(path)).thenThrow(HistoryExportFailure());
+      when(historyLocalDataSource.exportRecordsToXml(path)).thenThrow(HistoryExportFailure());
 
       // Act
-      final result = await historyRepository.exportXml(path);
+      final result = await historyRepository.exportHistoryToXml(path);
       final failure = result.failure!;
 
       // Assert
       expect(result.isFailure, isTrue);
       expect(failure, isA<HistoryExportFailure>());
 
-      verify(historyLocalDataSource.exportXml(path)).called(1);
+      verify(historyLocalDataSource.exportRecordsToXml(path)).called(1);
     });
 
     test('возвращает AppFailure при неизвестной ошибке источника данных', () async {
       // Arrange
-      when(historyLocalDataSource.exportXml(path)).thenThrow(UnknownFailure());
+      when(historyLocalDataSource.exportRecordsToXml(path)).thenThrow(UnknownFailure());
 
       // Act
-      final result = await historyRepository.exportXml(path);
+      final result = await historyRepository.exportHistoryToXml(path);
       final failure = result.failure!;
 
       // Assert
       expect(result.isFailure, isTrue);
       expect(failure, isA<UnknownFailure>());
 
-      verify(historyLocalDataSource.exportXml(path)).called(1);
+      verify(historyLocalDataSource.exportRecordsToXml(path)).called(1);
     });
   });
 }

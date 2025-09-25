@@ -36,7 +36,7 @@ void main() {
       when(mockBox.values).thenReturn(<Map<String, dynamic>>[]);
 
       // Act
-      final result = historyLocalDataSource.readAll();
+      final result = historyLocalDataSource.readAllRecords();
 
       // Assert
       expect(result, isEmpty);
@@ -61,7 +61,7 @@ void main() {
       when(mockBox.values).thenReturn([json1, json2]);
 
       // Act
-      final result = historyLocalDataSource.readAll();
+      final result = historyLocalDataSource.readAllRecords();
 
       // Assert
       expect(result.length, 2);
@@ -75,7 +75,7 @@ void main() {
 
       // Act & Assert
       expect(
-        () => historyLocalDataSource.readAll(),
+        () => historyLocalDataSource.readAllRecords(),
         throwsA(isA<HistoryStorageFailure>()),
       );
     });
@@ -86,7 +86,7 @@ void main() {
 
       // Act & Assert
       expect(
-        () => historyLocalDataSource.readAll(),
+        () => historyLocalDataSource.readAllRecords(),
         throwsA(isA<UnknownFailure>()),
       );
     });
@@ -110,7 +110,7 @@ void main() {
       when(mockBox.add(any)).thenAnswer((_) async => 0);
 
       // Act
-      await historyLocalDataSource.save(dto);
+      await historyLocalDataSource.saveRecord(dto);
 
       // Assert
       verify(mockBox.add(dto.toJson())).called(1);
@@ -122,7 +122,7 @@ void main() {
 
       // Act & Assert
       expect(
-        () => historyLocalDataSource.save(dto),
+        () => historyLocalDataSource.saveRecord(dto),
         throwsA(isA<HistorySaveFailure>()),
       );
     });
@@ -133,7 +133,7 @@ void main() {
 
       // Act & Assert
       expect(
-        () => historyLocalDataSource.save(dto),
+        () => historyLocalDataSource.saveRecord(dto),
         throwsA(isA<UnknownFailure>()),
       );
     });
@@ -154,7 +154,7 @@ void main() {
       final filePath = '${tempDir.path}/test_single.xml';
 
       // Act
-      await historyLocalDataSource.exportXml(filePath);
+      await historyLocalDataSource.exportRecordsToXml(filePath);
 
       // Assert
       final content = await File(filePath).readAsString();
@@ -184,7 +184,7 @@ void main() {
       final filePath = '${tempDir.path}/test_multiply.xml';
 
       // Act
-      await historyLocalDataSource.exportXml(filePath);
+      await historyLocalDataSource.exportRecordsToXml(filePath);
 
       // Assert
       final content = await File(filePath).readAsString();
@@ -201,7 +201,7 @@ void main() {
       final filePath = '${tempDir.path}/test_empty.xml';
 
       // Act
-      await historyLocalDataSource.exportXml(filePath);
+      await historyLocalDataSource.exportRecordsToXml(filePath);
 
       // Assert
       final content = await File(filePath).readAsString();
@@ -216,7 +216,7 @@ void main() {
 
       // Act & Assert
       expect(
-        () => historyLocalDataSource.exportXml(filePath),
+        () => historyLocalDataSource.exportRecordsToXml(filePath),
         throwsA(isA<HistoryExportFailure>()),
       );
     });
@@ -229,7 +229,7 @@ void main() {
 
       // Act & Assert
       expect(
-        () => historyLocalDataSource.exportXml(filePath),
+        () => historyLocalDataSource.exportRecordsToXml(filePath),
         throwsA(isA<UnknownFailure>()),
       );
     });

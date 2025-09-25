@@ -14,7 +14,7 @@ final class HistoryLocalDataSourceImpl implements IHistoryLocalDataSource {
   HistoryLocalDataSourceImpl(this._box);
 
   @override
-  List<ConversionRecordDto> readAll() {
+  List<ConversionRecordDto> readAllRecords() {
     try {
       return _box.values.map((e) => ConversionRecordDto.fromJson(e)).toList();
     } on HiveError catch (e, s) {
@@ -28,7 +28,7 @@ final class HistoryLocalDataSourceImpl implements IHistoryLocalDataSource {
   }
 
   @override
-  Future<void> save(ConversionRecordDto dto) async {
+  Future<void> saveRecord(ConversionRecordDto dto) async {
     try {
       await _box.add(dto.toJson());
     } on HiveError catch (e, s) {
@@ -42,8 +42,8 @@ final class HistoryLocalDataSourceImpl implements IHistoryLocalDataSource {
   }
 
   @override
-  Future<void> exportXml(String path) async {
-    final records = readAll();
+  Future<void> exportRecordsToXml(String path) async {
+    final records = readAllRecords();
     try {
       final xml = records.toXml();
       final file = File(path);

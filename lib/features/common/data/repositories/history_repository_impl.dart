@@ -17,9 +17,9 @@ final class HistoryRepositoryImpl implements IHistoryRepository {
     : _localDataSource = localDataSource;
 
   @override
-  AsyncResult<List<ConversionRecordEntity>> getAll() async {
+  AsyncResult<List<ConversionRecordEntity>> getAllRecords() async {
     try {
-      final dtos = _localDataSource.readAll();
+      final dtos = _localDataSource.readAllRecords();
       if (dtos.isEmpty) {
         return Result.failure(HistoryEmptyFailure());
       }
@@ -33,9 +33,9 @@ final class HistoryRepositoryImpl implements IHistoryRepository {
   }
 
   @override
-  AsyncResult<void> save(ConversionRecordEntity record) async {
+  AsyncResult<void> saveRecord(ConversionRecordEntity record) async {
     try {
-      await _localDataSource.save(record.toDto());
+      await _localDataSource.saveRecord(record.toDto());
       return Result.success(null);
     } on AppFailure catch (e) {
       _debugPrint(e);
@@ -44,9 +44,9 @@ final class HistoryRepositoryImpl implements IHistoryRepository {
   }
 
   @override
-  AsyncResult<void> exportXml(String path) async {
+  AsyncResult<void> exportHistoryToXml(String path) async {
     try {
-      await _localDataSource.exportXml(path);
+      await _localDataSource.exportRecordsToXml(path);
       return Result.success(null);
     } on AppFailure catch (e) {
       _debugPrint(e);
