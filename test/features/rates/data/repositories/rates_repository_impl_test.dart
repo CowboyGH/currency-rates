@@ -31,7 +31,7 @@ void main() {
     ],
   );
   setUp(() {
-    mockRatesRemoteDataSource = MockRatesRemoteDataSource();
+    mockRatesRemoteDataSource = MockRatesRemoteDataSourceImpl();
     ratesRepository = RatesRepositoryImpl(remoteDataSource: mockRatesRemoteDataSource);
   });
 
