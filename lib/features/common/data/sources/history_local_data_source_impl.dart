@@ -22,6 +22,7 @@ final class HistoryLocalDataSourceImpl implements IHistoryLocalDataSource {
     } catch (e, s) {
       throw UnknownFailure(
         message: 'Неожиданная ошибка при получении истории',
+        parentException: e,
         stackTrace: s,
       );
     }
@@ -36,6 +37,7 @@ final class HistoryLocalDataSourceImpl implements IHistoryLocalDataSource {
     } catch (e, s) {
       throw UnknownFailure(
         message: 'Неожиданная ошибка при сохранении записи',
+        parentException: e,
         stackTrace: s,
       );
     }
@@ -53,6 +55,7 @@ final class HistoryLocalDataSourceImpl implements IHistoryLocalDataSource {
     } catch (e, s) {
       throw UnknownFailure(
         message: 'Неожиданная ошибка при экспорте данных',
+        parentException: e,
         stackTrace: s,
       );
     }

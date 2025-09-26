@@ -36,6 +36,7 @@ final class RatesRepositoryImpl implements IRatesRepository {
     } catch (e, s) {
       final failure = UnknownFailure(
         message: 'Неожиданная ошибка при загрузке курсов валют.',
+        parentException: e,
         stackTrace: s,
       );
       _debugPrint(failure);
