@@ -22,12 +22,12 @@ class CurrencyRatesScreenBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<RatesRemoteDataSourceImpl>(
+        Provider<IRatesRemoteDataSource>(
           create: (_) => RatesRemoteDataSourceImpl(apiClient: di<ApiClient>()),
         ),
         Provider<IRatesRepository>(
           create: (context) =>
-              RatesRepositoryImpl(remoteDataSource: context.read<RatesRemoteDataSourceImpl>()),
+              RatesRepositoryImpl(remoteDataSource: context.read<IRatesRemoteDataSource>()),
         ),
         Provider<GetRatesUsecase>(
           create: (context) => GetRatesUsecase(repository: context.read<IRatesRepository>()),
