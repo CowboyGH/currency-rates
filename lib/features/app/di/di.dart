@@ -26,5 +26,6 @@ Future<void> initDi() async {
 
   // Hive
   await Hive.initFlutter();
-  await Hive.openBox('history_box_v1');
+  final Box<dynamic> box = await Hive.openBox('history_box_v1');
+  di.registerLazySingleton<Box<dynamic>>(() => box);
 }

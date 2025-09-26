@@ -9,14 +9,16 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 /// Реализация [IHistoryLocalDataSource].
 final class HistoryLocalDataSourceImpl implements IHistoryLocalDataSource {
-  final Box<Map<String, dynamic>> _box;
+  final Box<dynamic> _box;
 
   HistoryLocalDataSourceImpl(this._box);
 
   @override
   List<ConversionRecordDto> readAllRecords() {
     try {
-      return _box.values.map((e) => ConversionRecordDto.fromJson(e)).toList();
+      return _box.values
+          .map((e) => ConversionRecordDto.fromJson(Map<String, dynamic>.from(e)))
+          .toList();
     } on HiveError catch (e, s) {
       throw HistoryStorageFailure(parentException: e, stackTrace: s);
     } catch (e, s) {

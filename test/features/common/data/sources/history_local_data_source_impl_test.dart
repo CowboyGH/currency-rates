@@ -42,7 +42,7 @@ void main() {
       expect(result, isEmpty);
     });
 
-    test('возвращает пустой список, если в box есть данные', () {
+    test('возвращает список с данными, если в box не пустой', () {
       // Arrange
       final json1 = {
         'charCode': 'USD',
@@ -67,6 +67,25 @@ void main() {
       expect(result.length, 2);
       expect(result[0].charCode, 'USD');
       expect(result[1].charCode, 'EUR');
+    });
+
+    test('readAllRecords корректно парсит Map<dynamic,dynamic> из бокса', () {
+      // Arrange
+      final dynamicMap = <dynamic, dynamic>{
+        'charCode': 'USD',
+        'amount': '100',
+        'result': '10000',
+        'unitRate': '100',
+        'timestamp': '2025-09-18T10:05:00Z',
+      };
+      when(mockBox.values).thenReturn([Map<String, dynamic>.from(dynamicMap)]);
+
+      // Act
+      final result = historyLocalDataSource.readAllRecords();
+
+      // Assert
+      expect(result.length, 1);
+      expect(result.first.charCode, 'USD');
     });
 
     test('возвращает HistoryStorageFailure при ошибке локального хранилища', () async {
