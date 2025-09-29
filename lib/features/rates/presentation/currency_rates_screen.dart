@@ -77,6 +77,17 @@ class _CurrencyRatesScreenState extends State<CurrencyRatesScreen> {
             bottom: Radius.circular(20),
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Builder(
+              builder: (context) => IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () => Scaffold.of(context).openEndDrawer(),
+              ),
+            ),
+          ),
+        ],
       ),
       endDrawer: const AppDrawer(),
       body: BlocListener<RatesCubit, RatesState>(
