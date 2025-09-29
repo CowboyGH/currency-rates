@@ -42,7 +42,7 @@ void main() {
       expect(result, isEmpty);
     });
 
-    test('возвращает список с данными, если в box не пустой', () {
+    test('возвращает список с данными, если box не пустой', () {
       // Arrange
       final json1 = {
         'charCode': 'USD',
@@ -65,8 +65,8 @@ void main() {
 
       // Assert
       expect(result.length, 2);
-      expect(result[0].charCode, 'USD');
-      expect(result[1].charCode, 'EUR');
+      expect(result[0].charCode, 'EUR');
+      expect(result[1].charCode, 'USD');
     });
 
     test('readAllRecords корректно парсит Map<dynamic,dynamic> из бокса', () {

@@ -16,9 +16,11 @@ final class HistoryLocalDataSourceImpl implements IHistoryLocalDataSource {
   @override
   List<ConversionRecordDto> readAllRecords() {
     try {
-      return _box.values
+      final records = _box.values
           .map((e) => ConversionRecordDto.fromJson(Map<String, dynamic>.from(e)))
           .toList();
+
+      return records.reversed.toList();
     } on HiveError catch (e, s) {
       throw HistoryStorageFailure(parentException: e, stackTrace: s);
     } catch (e, s) {
