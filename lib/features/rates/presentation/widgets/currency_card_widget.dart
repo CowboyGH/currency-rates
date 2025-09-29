@@ -1,3 +1,4 @@
+import 'package:currency_rates/features/history/presentation/cubits/save_record/save_record_cubit.dart';
 import 'package:currency_rates/features/rates/domain/entities/currency_entity.dart';
 import 'package:currency_rates/features/rates/presentation/cubits/conversion/conversion_cubit.dart';
 import 'package:currency_rates/features/rates/presentation/widgets/currency_conversion_dialog.dart';
@@ -18,8 +19,11 @@ class CurrencyCardWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () => showDialog(
         context: context,
-        builder: (_) => BlocProvider.value(
-          value: context.read<ConversionCubit>(),
+        builder: (_) => MultiBlocProvider(
+          providers: [
+            BlocProvider.value(value: context.read<ConversionCubit>()),
+            BlocProvider.value(value: context.read<SaveRecordCubit>()),
+          ],
           child: CurrencyConversionDialog(
             charCode: currency.charCode,
             unitRate: currency.unitRate.toString(),
