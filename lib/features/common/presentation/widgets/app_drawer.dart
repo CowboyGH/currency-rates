@@ -43,7 +43,10 @@ class AppDrawer extends StatelessWidget {
             ),
             AppDrawerTile(
               title: AppStrings.history,
-              onTap: context.pop,
+              onTap: () {
+                context.pop();
+                context.push('/history');
+              },
               icon: Icons.history,
             ),
           ],

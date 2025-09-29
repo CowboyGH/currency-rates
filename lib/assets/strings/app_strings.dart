@@ -20,4 +20,6 @@ abstract class AppStrings {
 
   // История операций
   static const history = 'История операций';
+  static const rate = 'Курс';
+  static const exportSuccess = 'История успешно экспортирована';
 }
