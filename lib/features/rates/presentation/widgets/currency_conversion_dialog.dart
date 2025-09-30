@@ -32,18 +32,16 @@ class _CurrencyConversionDialogState extends State<CurrencyConversionDialog> {
   final _amountController = TextEditingController();
   final _resultController = TextEditingController();
   bool _canConvert = false;
+  Decimal? _lastConvertedAmount;
 
   @override
   void initState() {
     super.initState();
     context.read<ConversionCubit>().reset();
     _amountController.addListener(() {
-      final text = _amountController.text;
-      final isNotEmpty = text.isNotEmpty;
-      final isValidNumber = Decimal.tryParse(text) != null;
       if (mounted) {
         setState(() {
-          _canConvert = isNotEmpty && isValidNumber;
+          _canConvert = _amountController.text.isNotEmpty;
         });
       }
     });
@@ -61,7 +59,7 @@ class _CurrencyConversionDialogState extends State<CurrencyConversionDialog> {
   void _convert() {
     if (_formKey.currentState?.validate() ?? false) {
       final amount = Decimal.tryParse(_amountController.text);
-      if (amount != null) {
+      if (amount != null && amount != _lastConvertedAmount) {
         context.read<ConversionCubit>().convert(
           amount: amount,
           unitRate: Decimal.parse(widget.unitRate),
@@ -120,10 +118,12 @@ class _CurrencyConversionDialogState extends State<CurrencyConversionDialog> {
     return BlocListener<ConversionCubit, ConversionState>(
       listener: (_, state) {
         if (state is ConversionSuccess) {
+          final currentAmount = Decimal.parse(_amountController.text);
+          _lastConvertedAmount = currentAmount;
           context.read<SaveRecordCubit>().saveRecord(
             ConversionRecordEntity(
               charCode: widget.charCode,
-              amount: Decimal.parse(_amountController.text),
+              amount: currentAmount,
               result: state.result,
               unitRate: Decimal.parse(widget.unitRate),
               timestamp: DateTime.now(),
