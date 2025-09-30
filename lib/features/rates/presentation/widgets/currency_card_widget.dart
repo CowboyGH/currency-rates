@@ -1,3 +1,4 @@
+import 'package:currency_rates/assets/strings/app_strings.dart';
 import 'package:currency_rates/features/history/presentation/cubits/save_record/save_record_cubit.dart';
 import 'package:currency_rates/features/rates/domain/entities/currency_entity.dart';
 import 'package:currency_rates/features/rates/presentation/cubits/conversion/conversion_cubit.dart';
@@ -78,7 +79,7 @@ class CurrencyCardWidget extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '${currency.nominal} ${currency.charCode} = ${currency.value} ₽',
+                      '${currency.nominal} ${currency.charCode} = ${currency.value} ${AppStrings.ruble}',
                       style: textTheme.number.copyWith(
                         color: colorTheme.primary,
                         fontWeight: FontWeight.bold,
@@ -89,7 +90,7 @@ class CurrencyCardWidget extends StatelessWidget {
                     const SizedBox(height: 4),
                     if (currency.nominal != 1)
                       Text(
-                        '1 ${currency.charCode} = ${currency.unitRate} ₽',
+                        '1 ${currency.charCode} = ${currency.unitRate} ${AppStrings.ruble}',
                         style: textTheme.body.copyWith(
                           color: colorTheme.onSurface.withValues(alpha: 0.7),
                         ),
