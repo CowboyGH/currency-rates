@@ -65,6 +65,7 @@ class CurrencySectionWidget extends StatelessWidget {
                   return TextFormField(
                     controller: controller,
                     readOnly: isReadOnly,
+                    autofocus: !isReadOnly,
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     maxLines: 1,
                     inputFormatters: [
