@@ -22,7 +22,7 @@ Future<void> initDi() async {
     ..receiveTimeout = receiveTimeout;
 
   final ApiClient apiClient = ApiClient(dio);
-  di.registerLazySingleton(() => apiClient);
+  di.registerLazySingleton<ApiClient>(() => apiClient);
 
   // Hive
   await Hive.initFlutter();
