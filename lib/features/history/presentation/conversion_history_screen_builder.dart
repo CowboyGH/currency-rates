@@ -1,8 +1,8 @@
 import 'package:currency_rates/features/app/di/di.dart';
-import 'package:currency_rates/features/common/data/repositories/history_repository_impl.dart';
-import 'package:currency_rates/features/common/data/sources/history_local_data_source_impl.dart';
-import 'package:currency_rates/features/common/domain/repositories/i_history_repository.dart';
-import 'package:currency_rates/features/common/domain/sources/i_history_local_data_source.dart';
+import 'package:currency_rates/features/history/data/repositories/history_repository_impl.dart';
+import 'package:currency_rates/features/history/data/sources/history_local_data_source_impl.dart';
+import 'package:currency_rates/features/history/domain/repositories/i_history_repository.dart';
+import 'package:currency_rates/features/history/domain/sources/i_history_local_data_source.dart';
 import 'package:currency_rates/features/history/domain/usecases/export_history_to_xml_usecase.dart';
 import 'package:currency_rates/features/history/domain/usecases/get_history_usecase.dart';
 import 'package:currency_rates/features/history/domain/usecases/save_record_usecase.dart';

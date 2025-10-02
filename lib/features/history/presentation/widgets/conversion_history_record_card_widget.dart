@@ -1,5 +1,5 @@
 import 'package:currency_rates/assets/strings/app_strings.dart';
-import 'package:currency_rates/features/common/domain/entities/conversion_record_entity.dart';
+import 'package:currency_rates/features/history/domain/entities/conversion_record_entity.dart';
 import 'package:currency_rates/uikit/themes/colors/app_color_theme.dart';
 import 'package:currency_rates/uikit/themes/text/app_text_theme.dart';
 import 'package:decimal/decimal.dart';

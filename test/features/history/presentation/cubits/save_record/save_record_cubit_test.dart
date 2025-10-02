@@ -2,7 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:currency_rates/core/domain/entities/failure/app_failure.dart';
 import 'package:currency_rates/core/domain/entities/failure/unknown_failure.dart';
 import 'package:currency_rates/core/domain/entities/result/result.dart';
-import 'package:currency_rates/features/common/domain/entities/conversion_record_entity.dart';
+import 'package:currency_rates/features/history/domain/entities/conversion_record_entity.dart';
 import 'package:currency_rates/features/history/domain/usecases/save_record_usecase.dart';
 import 'package:currency_rates/features/history/presentation/cubits/save_record/save_record_cubit.dart';
 import 'package:decimal/decimal.dart';

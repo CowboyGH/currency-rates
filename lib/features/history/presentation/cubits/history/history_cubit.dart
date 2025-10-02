@@ -1,6 +1,6 @@
 import 'package:currency_rates/core/domain/entities/failure/app_failure.dart';
 import 'package:currency_rates/core/domain/entities/result/result.dart';
-import 'package:currency_rates/features/common/domain/entities/conversion_record_entity.dart';
+import 'package:currency_rates/features/history/domain/entities/conversion_record_entity.dart';
 import 'package:currency_rates/features/history/domain/usecases/get_history_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

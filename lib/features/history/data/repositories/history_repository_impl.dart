@@ -2,11 +2,11 @@ import 'package:currency_rates/core/domain/entities/failure/app_failure.dart';
 import 'package:currency_rates/core/domain/entities/failure/history/history_failure.dart';
 import 'package:currency_rates/core/domain/entities/result/async_result.dart';
 import 'package:currency_rates/core/domain/entities/result/result.dart';
-import 'package:currency_rates/features/common/data/mappers/conversion_record_dto_mapper.dart';
-import 'package:currency_rates/features/common/data/mappers/conversion_record_entity_mapper.dart';
-import 'package:currency_rates/features/common/domain/entities/conversion_record_entity.dart';
-import 'package:currency_rates/features/common/domain/repositories/i_history_repository.dart';
-import 'package:currency_rates/features/common/domain/sources/i_history_local_data_source.dart';
+import 'package:currency_rates/features/history/data/mappers/conversion_record_dto_mapper.dart';
+import 'package:currency_rates/features/history/data/mappers/conversion_record_entity_mapper.dart';
+import 'package:currency_rates/features/history/domain/entities/conversion_record_entity.dart';
+import 'package:currency_rates/features/history/domain/repositories/i_history_repository.dart';
+import 'package:currency_rates/features/history/domain/sources/i_history_local_data_source.dart';
 import 'package:flutter/foundation.dart';
 
 /// Реализация [IHistoryRepository].

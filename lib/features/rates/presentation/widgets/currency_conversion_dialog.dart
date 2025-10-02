@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:currency_rates/assets/strings/app_strings.dart';
-import 'package:currency_rates/features/common/domain/entities/conversion_record_entity.dart';
+import 'package:currency_rates/features/history/domain/entities/conversion_record_entity.dart';
 import 'package:currency_rates/features/history/presentation/cubits/save_record/save_record_cubit.dart';
 import 'package:currency_rates/features/rates/presentation/cubits/conversion/conversion_cubit.dart';
 import 'package:currency_rates/features/rates/presentation/widgets/currency_section_widget.dart';

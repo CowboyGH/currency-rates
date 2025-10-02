@@ -1,4 +1,4 @@
-import 'package:currency_rates/features/common/data/models/conversion_record_dto.dart';
+import 'package:currency_rates/features/history/data/models/conversion_record_dto.dart';
 
 /// Интерфейс для работы с локальным источником данных истории конвертаций.
 abstract interface class IHistoryLocalDataSource {

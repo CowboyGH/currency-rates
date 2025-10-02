@@ -1,6 +1,6 @@
-import 'package:currency_rates/features/common/data/mappers/conversion_record_entity_mapper.dart';
-import 'package:currency_rates/features/common/data/models/conversion_record_dto.dart';
-import 'package:currency_rates/features/common/domain/entities/conversion_record_entity.dart';
+import 'package:currency_rates/features/history/data/mappers/conversion_record_entity_mapper.dart';
+import 'package:currency_rates/features/history/data/models/conversion_record_dto.dart';
+import 'package:currency_rates/features/history/domain/entities/conversion_record_entity.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 

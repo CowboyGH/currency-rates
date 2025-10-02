@@ -1,4 +1,4 @@
-import 'package:currency_rates/features/common/data/models/conversion_record_dto.dart';
+import 'package:currency_rates/features/history/data/models/conversion_record_dto.dart';
 
 /// Маппер для преобразования списка записей конвертации в XML-строку.
 extension ConversionHistoryXmlMapper on List<ConversionRecordDto> {
