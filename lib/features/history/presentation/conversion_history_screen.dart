@@ -1,5 +1,6 @@
 import 'package:currency_rates/assets/strings/app_strings.dart';
 import 'package:currency_rates/features/common/presentation/widgets/load_error_widget.dart';
+import 'package:currency_rates/features/common/presentation/widgets/show_app_snackbar.dart';
 import 'package:currency_rates/features/history/presentation/cubits/export_history/export_history_cubit.dart';
 import 'package:currency_rates/features/history/presentation/cubits/history/history_cubit.dart';
 import 'package:currency_rates/features/history/presentation/widgets/conversion_history_record_card_widget.dart';
@@ -33,29 +34,6 @@ class _ConversionHistoryScreenState extends State<ConversionHistoryScreen> {
       // ignore: use_build_context_synchronously
       context.read<ExportHistoryCubit>().exportHistory(filePath);
     }
-  }
-
-  void _showSnackBar({required String message}) {
-    if (!mounted) return;
-    final colorTheme = AppColorTheme.of(context);
-    final textTheme = AppTextTheme.of(context);
-
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        width: MediaQuery.sizeOf(context).width * 0.6,
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        backgroundColor: colorTheme.primary,
-        content: Text(
-          message,
-          textAlign: TextAlign.center,
-          style: textTheme.body.copyWith(color: colorTheme.onPrimary),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
-    );
   }
 
   @override
@@ -99,7 +77,7 @@ class _ConversionHistoryScreenState extends State<ConversionHistoryScreen> {
       body: BlocListener<ExportHistoryCubit, ExportHistoryState>(
         listener: (context, state) {
           if (state is ExportHistorySuccess) {
-            _showSnackBar(message: AppStrings.exportSuccess);
+            showAppSnackBar(context, AppStrings.exportSuccess);
           }
           if (state is ExportHistoryFailure) {
             showDialog(

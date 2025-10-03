@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:currency_rates/assets/strings/app_strings.dart';
+import 'package:currency_rates/features/common/presentation/widgets/show_app_snackbar.dart';
 import 'package:currency_rates/features/history/domain/entities/conversion_record_entity.dart';
 import 'package:currency_rates/features/history/presentation/cubits/save_record/save_record_cubit.dart';
 import 'package:currency_rates/features/rates/presentation/cubits/conversion/conversion_cubit.dart';
@@ -86,29 +87,6 @@ class _CurrencyConversionDialogState extends State<CurrencyConversionDialog> {
         .replaceFirst(RegExp(r'\.$'), '');
   }
 
-  void _showSnackBar({required String message}) {
-    if (!mounted) return;
-    final colorTheme = AppColorTheme.of(context);
-    final textTheme = AppTextTheme.of(context);
-
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        width: MediaQuery.sizeOf(context).width * 0.6,
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        backgroundColor: colorTheme.primary,
-        content: Text(
-          message,
-          textAlign: TextAlign.center,
-          style: textTheme.body.copyWith(color: colorTheme.onPrimary),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final colorTheme = AppColorTheme.of(context);
@@ -135,7 +113,7 @@ class _CurrencyConversionDialogState extends State<CurrencyConversionDialog> {
       child: BlocListener<SaveRecordCubit, SaveRecordState>(
         listener: (context, state) {
           if (state is SaveRecordFailure) {
-            _showSnackBar(message: state.failure.message!);
+            showAppSnackBar(context, state.failure.message!);
           }
         },
         child: BackdropFilter(

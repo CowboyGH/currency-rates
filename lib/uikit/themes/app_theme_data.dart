@@ -56,6 +56,15 @@ abstract class AppThemeData {
       ),
     ),
     dividerTheme: DividerThemeData(color: _lightColorTheme.divider),
+    snackBarTheme: SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      backgroundColor: _lightColorTheme.primary,
+      contentTextStyle: _textTheme.body.copyWith(
+        color: _lightColorTheme.onPrimary,
+        overflow: TextOverflow.ellipsis,
+      ),
+    ),
   );
 
   /// Темная тема
@@ -106,5 +115,14 @@ abstract class AppThemeData {
       ),
     ),
     dividerTheme: DividerThemeData(color: _darkColorTheme.divider),
+    snackBarTheme: SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      backgroundColor: _darkColorTheme.primary,
+      contentTextStyle: _textTheme.body.copyWith(
+        color: _darkColorTheme.onPrimary,
+        overflow: TextOverflow.ellipsis,
+      ),
+    ),
   );
 }

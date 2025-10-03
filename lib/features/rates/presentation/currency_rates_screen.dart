@@ -1,6 +1,7 @@
 import 'package:currency_rates/assets/strings/app_strings.dart';
 import 'package:currency_rates/features/common/presentation/widgets/app_drawer.dart';
 import 'package:currency_rates/features/common/presentation/widgets/load_error_widget.dart';
+import 'package:currency_rates/features/common/presentation/widgets/show_app_snackbar.dart';
 import 'package:currency_rates/features/rates/presentation/cubits/rates/rates_cubit.dart';
 import 'package:currency_rates/features/rates/presentation/widgets/currency_card_widget.dart';
 import 'package:currency_rates/uikit/themes/colors/app_color_theme.dart';
@@ -25,29 +26,6 @@ class _CurrencyRatesScreenState extends State<CurrencyRatesScreen> {
 
   void _loadRates({bool isRefresh = false}) {
     context.read<RatesCubit>().loadRates(isRefresh: isRefresh);
-  }
-
-  void _showSnackBar({required String message}) {
-    if (!mounted) return;
-    final colorTheme = AppColorTheme.of(context);
-    final textTheme = AppTextTheme.of(context);
-
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        width: MediaQuery.sizeOf(context).width * 0.6,
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        backgroundColor: colorTheme.primary,
-        content: Text(
-          message,
-          textAlign: TextAlign.center,
-          style: textTheme.body.copyWith(color: colorTheme.onPrimary),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
-    );
   }
 
   @override
@@ -93,7 +71,7 @@ class _CurrencyRatesScreenState extends State<CurrencyRatesScreen> {
       body: BlocListener<RatesCubit, RatesState>(
         listener: (_, state) {
           if (state is RatesUnchanged) {
-            _showSnackBar(message: AppStrings.refreshSuccess);
+            showAppSnackBar(context, AppStrings.refreshSuccess);
           }
         },
         child: BlocBuilder<RatesCubit, RatesState>(
