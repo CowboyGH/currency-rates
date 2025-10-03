@@ -2,6 +2,7 @@ import 'package:currency_rates/uikit/themes/colors/app_color_theme.dart';
 import 'package:currency_rates/uikit/themes/text/app_text_theme.dart';
 import 'package:flutter/material.dart';
 
+/// Элемент бокового меню приложения.
 class AppDrawerTile extends StatelessWidget {
   final String title;
   final VoidCallback onTap;

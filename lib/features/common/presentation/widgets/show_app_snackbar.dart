@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Отображает SnackBar с сообщением [message] в контексте [context].
 void showAppSnackBar(BuildContext context, String message) {
   ScaffoldMessenger.of(context)
     ..clearSnackBars()

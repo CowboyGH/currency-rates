@@ -5,6 +5,7 @@ import 'package:currency_rates/uikit/themes/text/app_text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+/// Боковое меню приложения с пунктами навигации.
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
 
