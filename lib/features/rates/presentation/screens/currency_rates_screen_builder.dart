@@ -16,7 +16,7 @@ import 'package:currency_rates/features/rates/domain/usecases/convert_currency_u
 import 'package:currency_rates/features/rates/domain/usecases/get_rates_usecase.dart';
 import 'package:currency_rates/features/rates/presentation/cubits/conversion/conversion_cubit.dart';
 import 'package:currency_rates/features/rates/presentation/cubits/rates/rates_cubit.dart';
-import 'package:currency_rates/features/rates/presentation/currency_rates_screen.dart';
+import 'package:currency_rates/features/rates/presentation/screens/currency_rates_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';

@@ -6,7 +6,7 @@ import 'package:currency_rates/features/history/domain/sources/i_history_local_d
 import 'package:currency_rates/features/history/domain/usecases/export_history_to_xml_usecase.dart';
 import 'package:currency_rates/features/history/domain/usecases/get_history_usecase.dart';
 import 'package:currency_rates/features/history/domain/usecases/save_record_usecase.dart';
-import 'package:currency_rates/features/history/presentation/conversion_history_screen.dart';
+import 'package:currency_rates/features/history/presentation/screens/conversion_history_screen.dart';
 import 'package:currency_rates/features/history/presentation/cubits/export_history/export_history_cubit.dart';
 import 'package:currency_rates/features/history/presentation/cubits/history/history_cubit.dart';
 import 'package:currency_rates/features/history/presentation/cubits/save_record/save_record_cubit.dart';
