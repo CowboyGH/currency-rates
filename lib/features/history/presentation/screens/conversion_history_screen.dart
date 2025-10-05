@@ -94,12 +94,12 @@ class _ConversionHistoryScreenState extends State<ConversionHistoryScreen> {
               case HistoryLoadSuccess():
                 return ListView.separated(
                   itemCount: state.records.length,
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   itemBuilder: (_, index) {
                     final record = state.records[index];
                     return ConversionHistoryRecordCardWidget(record: record);
                   },
-                  separatorBuilder: (_, _) => const SizedBox(height: 8),
+                  separatorBuilder: (_, _) => const SizedBox(height: 16),
                 );
               case HistoryLoadError():
                 return LoadErrorWidget(message: state.failure.message);

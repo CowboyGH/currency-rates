@@ -84,12 +84,12 @@ class _CurrencyRatesScreenState extends State<CurrencyRatesScreen> {
                   onRefresh: () async => _loadRates(isRefresh: true),
                   child: ListView.separated(
                     itemCount: state.snapshot.currencies.length,
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                     itemBuilder: (_, index) {
                       final currency = state.snapshot.currencies[index];
                       return CurrencyCardWidget(currency: currency);
                     },
-                    separatorBuilder: (_, _) => const SizedBox(height: 8),
+                    separatorBuilder: (_, _) => const SizedBox(height: 16),
                   ),
                 );
               case RatesLoadError():

@@ -26,6 +26,7 @@ abstract class AppThemeData {
     splashFactory: NoSplash.splashFactory,
     extensions: [_lightColorTheme, _textTheme],
     cardTheme: CardThemeData(
+      margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       shadowColor: _lightColorTheme.shadow.withValues(alpha: 0.3),
     ),
@@ -85,6 +86,7 @@ abstract class AppThemeData {
     splashFactory: NoSplash.splashFactory,
     extensions: [_darkColorTheme, _textTheme],
     cardTheme: CardThemeData(
+      margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       shadowColor: _darkColorTheme.shadow.withValues(alpha: 0.3),
     ),
