@@ -39,7 +39,10 @@ class AppDrawer extends StatelessWidget {
             // Пункты меню
             AppDrawerTile(
               title: AppStrings.about,
-              onTap: context.pop,
+              onTap: () {
+                context.pop();
+                context.push('/about');
+              },
               icon: Icons.info_outline,
             ),
             AppDrawerTile(
