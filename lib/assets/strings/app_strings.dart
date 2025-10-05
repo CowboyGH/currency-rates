@@ -17,6 +17,13 @@ abstract class AppStrings {
 
   // О приложении
   static const about = 'О приложении';
+  static const appName = 'Currency Rates';
+  static const appDescription = 'Простое и удобное приложение для отслеживания курсов валют.';
+  static const developerInfoTitle = 'Информация о разработчике';
+  static const developerName = 'Ryan Delaney';
+  static const developerGithubUrl = 'https://github.com/CowboyGH';
+  static const usedLibrariesTitle = 'Используемые библиотеки';
+  static const linkFailure = 'Не удалось открыть ссылку';
 
   // История операций
   static const history = 'История операций';
