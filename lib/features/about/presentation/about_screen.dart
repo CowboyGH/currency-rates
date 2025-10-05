@@ -58,17 +58,7 @@ class AboutScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        surfaceTintColor: colorTheme.surface,
-        title: Text(
-          AppStrings.about,
-          style: textTheme.subtitle.copyWith(color: colorTheme.onBackground),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        centerTitle: true,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
-        ),
+        title: Text(AppStrings.about, maxLines: 1),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

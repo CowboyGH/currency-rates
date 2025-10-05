@@ -5,7 +5,6 @@ import 'package:currency_rates/features/history/presentation/cubits/export_histo
 import 'package:currency_rates/features/history/presentation/cubits/history/history_cubit.dart';
 import 'package:currency_rates/features/history/presentation/widgets/conversion_history_record_card_widget.dart';
 import 'package:currency_rates/uikit/themes/colors/app_color_theme.dart';
-import 'package:currency_rates/uikit/themes/text/app_text_theme.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,18 +38,10 @@ class _ConversionHistoryScreenState extends State<ConversionHistoryScreen> {
   @override
   Widget build(BuildContext context) {
     final colorTheme = AppColorTheme.of(context);
-    final textTheme = AppTextTheme.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        surfaceTintColor: colorTheme.surface,
-        title: Text(
-          AppStrings.history,
-          style: textTheme.subtitle.copyWith(color: colorTheme.onBackground),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        centerTitle: true,
-        actionsPadding: const EdgeInsets.only(right: 10),
+        title: Text(AppStrings.history, maxLines: 1),
         actions: [
           BlocBuilder<HistoryCubit, HistoryState>(
             buildWhen: (_, current) => current is HistoryLoadSuccess,
@@ -68,11 +59,6 @@ class _ConversionHistoryScreenState extends State<ConversionHistoryScreen> {
             },
           ),
         ],
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(20),
-          ),
-        ),
       ),
       body: BlocListener<ExportHistoryCubit, ExportHistoryState>(
         listener: (context, state) {

@@ -25,6 +25,20 @@ abstract class AppThemeData {
     dividerColor: _lightColorTheme.divider,
     splashFactory: NoSplash.splashFactory,
     extensions: [_lightColorTheme, _textTheme],
+    appBarTheme: AppBarTheme(
+      actionsPadding: const EdgeInsets.only(right: 10),
+      centerTitle: true,
+      titleTextStyle: _textTheme.subtitle.copyWith(
+        color: _lightColorTheme.onBackground,
+        overflow: TextOverflow.ellipsis,
+      ),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          bottom: Radius.circular(20),
+        ),
+      ),
+      surfaceTintColor: _lightColorTheme.surface,
+    ),
     cardTheme: CardThemeData(
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -85,6 +99,20 @@ abstract class AppThemeData {
     dividerColor: _darkColorTheme.divider,
     splashFactory: NoSplash.splashFactory,
     extensions: [_darkColorTheme, _textTheme],
+    appBarTheme: AppBarTheme(
+      actionsPadding: const EdgeInsets.only(right: 10),
+      centerTitle: true,
+      titleTextStyle: _textTheme.subtitle.copyWith(
+        color: _darkColorTheme.onBackground,
+        overflow: TextOverflow.ellipsis,
+      ),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          bottom: Radius.circular(20),
+        ),
+      ),
+      surfaceTintColor: _darkColorTheme.surface,
+    ),
     cardTheme: CardThemeData(
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

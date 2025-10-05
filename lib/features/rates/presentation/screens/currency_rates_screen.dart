@@ -4,8 +4,6 @@ import 'package:currency_rates/features/common/presentation/widgets/load_error_w
 import 'package:currency_rates/features/common/presentation/widgets/show_app_snackbar.dart';
 import 'package:currency_rates/features/rates/presentation/cubits/rates/rates_cubit.dart';
 import 'package:currency_rates/features/rates/presentation/widgets/currency_card_widget.dart';
-import 'package:currency_rates/uikit/themes/colors/app_color_theme.dart';
-import 'package:currency_rates/uikit/themes/text/app_text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,39 +28,25 @@ class _CurrencyRatesScreenState extends State<CurrencyRatesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final colorTheme = AppColorTheme.of(context);
-    final textTheme = AppTextTheme.of(context);
     return Scaffold(
       appBar: AppBar(
-        surfaceTintColor: colorTheme.surface,
         title: BlocBuilder<RatesCubit, RatesState>(
           buildWhen: (_, current) => current is RatesLoaded,
           builder: (_, state) {
             if (state is RatesLoaded) {
               return Text(
                 '${AppStrings.currencyRatesOn} ${state.snapshot.date}',
-                style: textTheme.subtitle.copyWith(color: colorTheme.onBackground),
                 maxLines: 1,
-                overflow: TextOverflow.ellipsis,
               );
             }
             return const SizedBox.shrink();
           },
         ),
-        centerTitle: true,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(20),
-          ),
-        ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: Builder(
-              builder: (context) => IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () => Scaffold.of(context).openEndDrawer(),
-              ),
+          Builder(
+            builder: (context) => IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () => Scaffold.of(context).openEndDrawer(),
             ),
           ),
         ],
