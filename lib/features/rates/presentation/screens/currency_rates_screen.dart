@@ -18,6 +18,7 @@ class CurrencyRatesScreen extends StatefulWidget {
 class _CurrencyRatesScreenState extends State<CurrencyRatesScreen> {
   @override
   void initState() {
+    context.read<RatesCubit>().init();
     _loadRates();
     super.initState();
   }
