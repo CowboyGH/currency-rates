@@ -6,7 +6,7 @@ class CurrencyDto {
   final String id;
 
   /// Числовой код.
-  final int numCode;
+  final String numCode;
 
   /// Текстовый код.
   final String charCode;
@@ -39,7 +39,7 @@ class CurrencyDto {
 
     return CurrencyDto(
       id: element.getAttribute('ID')!,
-      numCode: int.parse(text('NumCode')),
+      numCode: text('NumCode'),
       charCode: text('CharCode'),
       nominal: int.parse(text('Nominal')),
       name: text('Name'),

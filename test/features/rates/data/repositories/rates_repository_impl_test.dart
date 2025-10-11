@@ -22,7 +22,7 @@ void main() {
     currencies: [
       CurrencyDto(
         id: 'R01010',
-        numCode: 036,
+        numCode: '036',
         charCode: 'AUD',
         nominal: 1,
         name: 'Австралийский доллар',
