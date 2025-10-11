@@ -3,6 +3,7 @@ import 'package:currency_rates/features/history/presentation/screens/conversion_
 import 'package:currency_rates/features/rates/presentation/screens/currency_rates_screen_builder.dart';
 import 'package:go_router/go_router.dart';
 
+/// Маршрутизатор приложения.
 final router = GoRouter(
   initialLocation: '/',
   routes: [

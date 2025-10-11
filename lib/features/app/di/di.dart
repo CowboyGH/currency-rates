@@ -7,7 +7,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 final di = GetIt.instance;
 
 /// Инициализирует зависимости приложения с помощью GetIt.
-/// Включает регистрацию слоёв data, domain, presentation.
 Future<void> initDi() async {
   // ApiClient
   const sendTimeout = Duration(seconds: 10);

@@ -1,4 +1,5 @@
-/// Результат операции: успех [Success] или ошибка [Failure].
+/// Базовый тип для представления результата операции:
+/// успешного ([Success]) или неуспешного ([Failure]).
 sealed class Result<T, E extends Object> {
   const Result();
 
@@ -18,12 +19,14 @@ sealed class Result<T, E extends Object> {
   E? get failure => this is Failure<T, E> ? (this as Failure<T, E>).error : null;
 }
 
+/// Успешный результат операции с данными типа [T].
 final class Success<T, E extends Object> extends Result<T, E> {
   final T data;
 
   const Success(this.data);
 }
 
+/// Ошибочный результат операции с ошибкой типа [E].
 final class Failure<T, E extends Object> extends Result<T, E> {
   final E error;
   final StackTrace? stackTrace;
