@@ -24,64 +24,59 @@ class CurrencySectionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorTheme = AppColorTheme.of(context);
     final textTheme = AppTextTheme.of(context);
-    return Card(
-      elevation: 2,
-      shadowColor: colorTheme.shadow.withValues(alpha: 0.2),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Код валюты
-            Column(
-              children: [
-                Container(
-                  height: 50,
-                  width: 75,
-                  decoration: BoxDecoration(
-                    color: colorTheme.primary.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Center(
-                    child: Text(
-                      charCode,
-                      style: textTheme.subtitle.copyWith(color: colorTheme.primary),
-                    ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Код валюты
+          Column(
+            children: [
+              Container(
+                height: 50,
+                width: 75,
+                decoration: BoxDecoration(
+                  color: colorTheme.primary.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Center(
+                  child: Text(
+                    charCode,
+                    style: textTheme.subtitle.copyWith(color: colorTheme.primary),
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(width: 16),
-            // Поле ввода/отображения суммы
-            Expanded(
-              child: BlocBuilder<ConversionCubit, ConversionState>(
-                buildWhen: (_, state) => state is ConversionError || state is ConversionSuccess,
-                builder: (_, state) {
-                  String? error;
-                  if (!isReadOnly && state is ConversionError) {
-                    error = state.failure.message;
-                  }
-                  return TextFormField(
-                    controller: controller,
-                    readOnly: isReadOnly,
-                    autofocus: !isReadOnly,
-                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                    maxLines: 1,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
-                      LengthLimitingTextInputFormatter(30),
-                    ],
-                    style: textTheme.body.copyWith(color: colorTheme.onSurface),
-                    cursorErrorColor: colorTheme.primary,
-                    textAlign: TextAlign.right,
-                    decoration: InputDecoration(hintText: hintText, errorText: error),
-                  );
-                },
               ),
+            ],
+          ),
+          const SizedBox(width: 16),
+          // Поле ввода/отображения суммы
+          Expanded(
+            child: BlocBuilder<ConversionCubit, ConversionState>(
+              buildWhen: (_, state) => state is ConversionError || state is ConversionSuccess,
+              builder: (_, state) {
+                String? error;
+                if (!isReadOnly && state is ConversionError) {
+                  error = state.failure.message;
+                }
+                return TextFormField(
+                  controller: controller,
+                  readOnly: isReadOnly,
+                  autofocus: !isReadOnly,
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  maxLines: 1,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
+                    LengthLimitingTextInputFormatter(30),
+                  ],
+                  style: textTheme.body.copyWith(color: colorTheme.onSurface),
+                  cursorErrorColor: colorTheme.primary,
+                  textAlign: TextAlign.right,
+                  decoration: InputDecoration(hintText: hintText, errorText: error),
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
