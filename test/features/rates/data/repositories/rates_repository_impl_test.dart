@@ -3,7 +3,8 @@ import 'package:currency_rates/api/data/rates_snapshot_dto.dart';
 import 'package:currency_rates/core/domain/entities/failure/network/network_failure.dart';
 import 'package:currency_rates/core/domain/entities/failure/unknown_failure.dart';
 import 'package:currency_rates/features/rates/data/repositories/rates_repository_impl.dart';
-import 'package:currency_rates/features/rates/data/sources/rates_remote_data_source_impl.dart';
+import 'package:currency_rates/features/rates/domain/repositories/i_rates_repository.dart';
+import 'package:currency_rates/features/rates/domain/sources/i_rates_remote_data_source.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -11,10 +12,10 @@ import 'package:mockito/mockito.dart';
 
 import 'rates_repository_impl_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<RatesRemoteDataSourceImpl>()])
+@GenerateNiceMocks([MockSpec<IRatesRemoteDataSource>()])
 void main() {
-  late RatesRepositoryImpl ratesRepository;
-  late RatesRemoteDataSourceImpl mockRatesRemoteDataSource;
+  late IRatesRepository ratesRepository;
+  late IRatesRemoteDataSource mockRatesRemoteDataSource;
   const RatesSnapshotDto snapshotDto = RatesSnapshotDto(
     date: '16.08.2025',
     name: 'Foreign Currency Market',
@@ -31,7 +32,7 @@ void main() {
     ],
   );
   setUp(() {
-    mockRatesRemoteDataSource = MockRatesRemoteDataSourceImpl();
+    mockRatesRemoteDataSource = MockIRatesRemoteDataSource();
     ratesRepository = RatesRepositoryImpl(remoteDataSource: mockRatesRemoteDataSource);
   });
 
