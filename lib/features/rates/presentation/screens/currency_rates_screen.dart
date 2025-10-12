@@ -1,6 +1,6 @@
 import 'package:currency_rates/assets/strings/app_strings.dart';
 import 'package:currency_rates/features/common/presentation/widgets/app_drawer.dart';
-import 'package:currency_rates/features/common/presentation/widgets/load_error_widget.dart';
+import 'package:currency_rates/features/common/presentation/widgets/app_error_widget.dart';
 import 'package:currency_rates/features/common/presentation/widgets/show_app_snackbar.dart';
 import 'package:currency_rates/features/rates/presentation/cubits/rates/rates_cubit.dart';
 import 'package:currency_rates/features/rates/presentation/widgets/currency_card_widget.dart';
@@ -78,7 +78,7 @@ class _CurrencyRatesScreenState extends State<CurrencyRatesScreen> {
                   ),
                 );
               case RatesLoadError():
-                return LoadErrorWidget(message: state.failure.message);
+                return AppErrorWidget(message: state.failure.message);
               default:
                 return const SizedBox.shrink();
             }

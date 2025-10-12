@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:currency_rates/assets/strings/app_strings.dart';
-import 'package:currency_rates/features/common/presentation/widgets/load_error_widget.dart';
+import 'package:currency_rates/features/common/presentation/widgets/app_error_widget.dart';
 import 'package:currency_rates/features/common/presentation/widgets/show_app_snackbar.dart';
 import 'package:currency_rates/features/history/presentation/cubits/get_history_xml/get_history_xml_cubit.dart';
 import 'package:currency_rates/features/history/presentation/cubits/history/history_cubit.dart';
@@ -79,7 +79,7 @@ class _ConversionHistoryScreenState extends State<ConversionHistoryScreen> {
             showDialog(
               // ignore: use_build_context_synchronously
               context: context,
-              builder: (context) => LoadErrorWidget(message: state.failure.message),
+              builder: (context) => AppErrorWidget(message: state.failure.message),
             );
           }
         },
@@ -99,7 +99,7 @@ class _ConversionHistoryScreenState extends State<ConversionHistoryScreen> {
                   separatorBuilder: (_, _) => const SizedBox(height: 16),
                 );
               case HistoryLoadError():
-                return LoadErrorWidget(message: state.failure.message);
+                return AppErrorWidget(message: state.failure.message);
               default:
                 return const SizedBox.shrink();
             }
