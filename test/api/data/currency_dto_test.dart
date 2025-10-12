@@ -13,7 +13,7 @@ void main() {
       final currency = CurrencyDto.fromXml(parseValute(xml));
 
       expect(currency.id, equals('R01010'));
-      expect(currency.numCode, equals(36));
+      expect(currency.numCode, equals('036'));
       expect(currency.charCode, equals('AUD'));
       expect(currency.nominal, equals(1));
       expect(currency.name, equals('Австралийский доллар'));
