@@ -1,11 +1,14 @@
+import 'dart:convert';
+
 import 'package:currency_rates/assets/strings/app_strings.dart';
 import 'package:currency_rates/features/common/presentation/widgets/load_error_widget.dart';
 import 'package:currency_rates/features/common/presentation/widgets/show_app_snackbar.dart';
-import 'package:currency_rates/features/history/presentation/cubits/export_history/export_history_cubit.dart';
+import 'package:currency_rates/features/history/presentation/cubits/get_history_xml/get_history_xml_cubit.dart';
 import 'package:currency_rates/features/history/presentation/cubits/history/history_cubit.dart';
 import 'package:currency_rates/features/history/presentation/widgets/conversion_history_record_card_widget.dart';
 import 'package:currency_rates/uikit/themes/colors/app_color_theme.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -25,14 +28,18 @@ class _ConversionHistoryScreenState extends State<ConversionHistoryScreen> {
     context.read<HistoryCubit>().loadHistory();
   }
 
-  Future<void> _exportHistory(BuildContext context) async {
-    final selectedDirectory = await FilePicker.platform.getDirectoryPath();
-    if (selectedDirectory != null) {
-      final timestamp = DateFormat('yyyy-MM-dd_HH-mm-ss').format(DateTime.now());
-      final filePath = '$selectedDirectory/history_$timestamp.xml';
-      // ignore: use_build_context_synchronously
-      context.read<ExportHistoryCubit>().exportHistory(filePath);
-    }
+  Future<String?> _pickSavePathAndSaveFile(GetHistoryXmlSuccess state) async {
+    final timestamp = DateFormat('yyyy-MM-dd_HH-mm-ss').format(DateTime.now());
+    final fileName = 'history_$timestamp.xml';
+    final fileBytes = Uint8List.fromList(utf8.encode(state.xmlString));
+
+    return await FilePicker.platform.saveFile(
+      dialogTitle: AppStrings.saveHistory,
+      fileName: fileName,
+      type: FileType.custom,
+      allowedExtensions: ['xml'],
+      bytes: fileBytes,
+    );
   }
 
   @override
@@ -48,7 +55,7 @@ class _ConversionHistoryScreenState extends State<ConversionHistoryScreen> {
             builder: (_, state) {
               if (state is HistoryLoadSuccess) {
                 return IconButton(
-                  onPressed: () => _exportHistory(context),
+                  onPressed: () => context.read<GetHistoryXmlCubit>().fetchXmlString(),
                   icon: Icon(
                     Icons.save_alt,
                     color: colorTheme.onBackground,
@@ -60,13 +67,17 @@ class _ConversionHistoryScreenState extends State<ConversionHistoryScreen> {
           ),
         ],
       ),
-      body: BlocListener<ExportHistoryCubit, ExportHistoryState>(
-        listener: (context, state) {
-          if (state is ExportHistorySuccess) {
-            showAppSnackBar(context, AppStrings.exportSuccess);
+      body: BlocListener<GetHistoryXmlCubit, GetHistoryXmlState>(
+        listener: (context, state) async {
+          if (state is GetHistoryXmlSuccess) {
+            final savePath = await _pickSavePathAndSaveFile(state);
+            if (savePath != null && context.mounted) {
+              showAppSnackBar(context, AppStrings.exportSuccess);
+            }
           }
-          if (state is ExportHistoryFailure) {
+          if (state is GetHistoryXmlFailure) {
             showDialog(
+              // ignore: use_build_context_synchronously
               context: context,
               builder: (context) => LoadErrorWidget(message: state.failure.message),
             );

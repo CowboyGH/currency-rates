@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:currency_rates/core/domain/entities/failure/history/history_failure.dart';
 import 'package:currency_rates/core/domain/entities/failure/unknown_failure.dart';
 import 'package:currency_rates/features/history/data/mappers/conversion_history_xml_mapper.dart';
@@ -48,20 +46,13 @@ final class HistoryLocalDataSourceImpl implements IHistoryLocalDataSource {
   }
 
   @override
-  Future<void> exportRecordsToXml(String path) async {
-    final records = readAllRecords();
+  Future<String> getHistoryAsXmlString() async {
     try {
+      final records = readAllRecords();
       final xml = records.toXml();
-      final file = File(path);
-      await file.writeAsString(xml);
-    } on FileSystemException catch (e, s) {
-      throw HistoryExportFailure(parentException: e, stackTrace: s);
+      return xml;
     } catch (e, s) {
-      throw UnknownFailure(
-        message: 'Неожиданная ошибка при экспорте данных',
-        parentException: e,
-        stackTrace: s,
-      );
+      throw HistoryExportFailure(parentException: e, stackTrace: s);
     }
   }
 }

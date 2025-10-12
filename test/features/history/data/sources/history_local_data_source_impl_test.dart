@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:currency_rates/core/domain/entities/failure/history/history_failure.dart';
 import 'package:currency_rates/core/domain/entities/failure/unknown_failure.dart';
 import 'package:currency_rates/features/history/data/models/conversion_record_dto.dart';
@@ -16,18 +14,10 @@ import 'history_local_data_source_impl_test.mocks.dart';
 void main() {
   late IHistoryLocalDataSource historyLocalDataSource;
   late MockBox mockBox;
-  late Directory tempDir;
 
   setUp(() async {
     mockBox = MockBox();
     historyLocalDataSource = HistoryLocalDataSourceImpl(mockBox);
-    tempDir = await Directory.systemTemp.createTemp('test_');
-  });
-
-  tearDown(() async {
-    if (tempDir.existsSync()) {
-      await tempDir.delete(recursive: true);
-    }
   });
 
   group('HistoryLocalDataSourceImpl.readAll', () {
@@ -158,7 +148,7 @@ void main() {
     });
   });
 
-  group('HistoryLocalDataSourceImpl.exportXml', () {
+  group('HistoryLocalDataSourceImpl.getHistoryAsXmlString', () {
     test('создает корректный XML для одной записи', () async {
       // Arrange
       final dto = ConversionRecordDto(
@@ -170,19 +160,16 @@ void main() {
       );
       when(mockBox.values).thenReturn([dto.toJson()]);
 
-      final filePath = '${tempDir.path}/test_single.xml';
-
       // Act
-      await historyLocalDataSource.exportRecordsToXml(filePath);
+      final xml = await historyLocalDataSource.getHistoryAsXmlString();
 
       // Assert
-      final content = await File(filePath).readAsString();
-      expect(content, contains('<History>'));
-      expect(content, contains('</History>'));
-      expect(content, contains('<Result>7500</Result>'));
+      expect(xml, contains('<History>'));
+      expect(xml, contains('</History>'));
+      expect(xml, contains('<Result>7500</Result>'));
     });
 
-    test('должен создать XML с несколькими записями', () async {
+    test('создает корректный XML для нескольких записей', () async {
       // Arrange
       final dto1 = ConversionRecordDto(
         charCode: 'USD',
@@ -200,56 +187,37 @@ void main() {
       );
       when(mockBox.values).thenReturn([dto1.toJson(), dto2.toJson()]);
 
-      final filePath = '${tempDir.path}/test_multiply.xml';
-
       // Act
-      await historyLocalDataSource.exportRecordsToXml(filePath);
+      final xml = await historyLocalDataSource.getHistoryAsXmlString();
 
       // Assert
-      final content = await File(filePath).readAsString();
-      expect(content, contains('<History>'));
-      expect(content, contains('</History>'));
-      expect(content, contains('<Result>7500</Result>'));
-      expect(content, contains('<Result>4500</Result>'));
+      expect(xml, contains('<History>'));
+      expect(xml, contains('</History>'));
+      expect(xml, contains('<Result>7500</Result>'));
+      expect(xml, contains('<Result>4500</Result>'));
     });
 
-    test('должен создать XML только с корневым тегом, когда список пуст', () async {
+    test('возвращает XML только с корневым тегом, когда список пуст', () async {
       // Arrange
       when(mockBox.values).thenReturn([]);
 
-      final filePath = '${tempDir.path}/test_empty.xml';
-
       // Act
-      await historyLocalDataSource.exportRecordsToXml(filePath);
+      final xml = await historyLocalDataSource.getHistoryAsXmlString();
 
       // Assert
-      final content = await File(filePath).readAsString();
-      expect(content, contains('<History>'));
-      expect(content, contains('</History>'));
-      expect(content, isNot(contains('<Record>')));
+      expect(xml, contains('<History>'));
+      expect(xml, contains('</History>'));
+      expect(xml, isNot(contains('<Record>')));
     });
 
-    test('возвращает HistoryExportFailure при ошибке записи XML в файл', () async {
-      // Arrange
-      final filePath = '/non-existent_directory/test_export_failure.xml';
-
-      // Act & Assert
-      expect(
-        () => historyLocalDataSource.exportRecordsToXml(filePath),
-        throwsA(isA<HistoryExportFailure>()),
-      );
-    });
-
-    test('возвращает UnknownFailure при неизвестной ошибке', () async {
+    test('возвращает HistoryExportFailure при ошибке экспорта истории в XML-строку', () async {
       // Arrange
       when(mockBox.values).thenThrow(Object());
 
-      final filePath = '${tempDir.path}/test_unknown_failure.xml';
-
       // Act & Assert
-      expect(
-        () => historyLocalDataSource.exportRecordsToXml(filePath),
-        throwsA(isA<UnknownFailure>()),
+      await expectLater(
+        historyLocalDataSource.getHistoryAsXmlString(),
+        throwsA(isA<HistoryExportFailure>()),
       );
     });
   });

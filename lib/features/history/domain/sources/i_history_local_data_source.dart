@@ -8,6 +8,6 @@ abstract interface class IHistoryLocalDataSource {
   /// Сохраняет запись о конвертации валюты в локальное хранилище.
   Future<void> saveRecord(ConversionRecordDto dto);
 
-  /// Экспортирует историю конвертаций в XML-файл и сохраняет его по указанному пути.
-  Future<void> exportRecordsToXml(String path);
+  /// Преобразует историю конвертаций в XML-строку.
+  Future<String> getHistoryAsXmlString();
 }

@@ -9,6 +9,6 @@ abstract interface class IHistoryRepository {
   /// Сохраняет запись конвертации в историю.
   AsyncResult<void> saveRecord(ConversionRecordEntity record);
 
-  /// Экспортирует историю конвертаций в XML-файл по указанному пути.
-  AsyncResult<void> exportHistoryToXml(String path);
+  /// Возвращает историю конвертаций в виде XML-строки.
+  AsyncResult<String> getHistoryAsXmlString();
 }

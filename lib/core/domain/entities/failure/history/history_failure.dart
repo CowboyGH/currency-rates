@@ -31,10 +31,10 @@ class HistorySaveFailure extends HistoryFailure {
   }) : super(message: 'Не удалось сохранить запись');
 }
 
-/// Ошибка при экспорте истории в XML-файл.
+/// Ошибка при экспорте истории в XML-строку.
 class HistoryExportFailure extends HistoryFailure {
   const HistoryExportFailure({
     super.parentException,
     super.stackTrace,
-  }) : super(message: 'Не удалось экспортировать историю в XML');
+  }) : super(message: 'Не удалось сохранить историю в файл');
 }

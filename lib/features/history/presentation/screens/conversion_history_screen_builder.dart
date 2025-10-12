@@ -3,13 +3,13 @@ import 'package:currency_rates/features/history/data/repositories/history_reposi
 import 'package:currency_rates/features/history/data/sources/history_local_data_source_impl.dart';
 import 'package:currency_rates/features/history/domain/repositories/i_history_repository.dart';
 import 'package:currency_rates/features/history/domain/sources/i_history_local_data_source.dart';
-import 'package:currency_rates/features/history/domain/usecases/export_history_to_xml_usecase.dart';
+import 'package:currency_rates/features/history/domain/usecases/get_history_as_xml_string_usecase.dart';
 import 'package:currency_rates/features/history/domain/usecases/get_history_usecase.dart';
 import 'package:currency_rates/features/history/domain/usecases/save_record_usecase.dart';
-import 'package:currency_rates/features/history/presentation/screens/conversion_history_screen.dart';
-import 'package:currency_rates/features/history/presentation/cubits/export_history/export_history_cubit.dart';
+import 'package:currency_rates/features/history/presentation/cubits/get_history_xml/get_history_xml_cubit.dart';
 import 'package:currency_rates/features/history/presentation/cubits/history/history_cubit.dart';
 import 'package:currency_rates/features/history/presentation/cubits/save_record/save_record_cubit.dart';
+import 'package:currency_rates/features/history/presentation/screens/conversion_history_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -42,12 +42,12 @@ class ConversionHistoryScreenBuilder extends StatelessWidget {
         Provider<SaveRecordCubit>(
           create: (context) => SaveRecordCubit(context.read<SaveRecordUsecase>()),
         ),
-        Provider<ExportHistoryToXmlUsecase>(
+        Provider<GetHistoryAsXmlStringUsecase>(
           create: (context) =>
-              ExportHistoryToXmlUsecase(repository: context.read<IHistoryRepository>()),
+              GetHistoryAsXmlStringUsecase(repository: context.read<IHistoryRepository>()),
         ),
-        Provider<ExportHistoryCubit>(
-          create: (context) => ExportHistoryCubit(context.read<ExportHistoryToXmlUsecase>()),
+        Provider<GetHistoryXmlCubit>(
+          create: (context) => GetHistoryXmlCubit(context.read<GetHistoryAsXmlStringUsecase>()),
         ),
       ],
       child: const ConversionHistoryScreen(),

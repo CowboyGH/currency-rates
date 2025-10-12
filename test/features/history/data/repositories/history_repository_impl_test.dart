@@ -155,49 +155,50 @@ void main() {
     });
   });
 
-  group('HistoryRepositoryImpl.exportXml', () {
-    const String path = 'test';
-
-    test('корректно экспортирует xml по указанному пути', () async {
+  group('HistoryRepositoryImpl.getHistoryAsXmlString', () {
+    test('возвращает успешный результат в виде XML-строки', () async {
       // Arrange
-      when(historyLocalDataSource.exportRecordsToXml(path)).thenAnswer((_) async {});
+      const xmlString = '<History></History>';
+      when(historyLocalDataSource.getHistoryAsXmlString()).thenAnswer((_) async => xmlString);
 
       // Act
-      final result = await historyRepository.exportHistoryToXml(path);
+      final result = await historyRepository.getHistoryAsXmlString();
 
       // Assert
       expect(result.isSuccess, isTrue);
-      verify(historyLocalDataSource.exportRecordsToXml(path)).called(1);
+      expect(result.success, xmlString);
+      verify(historyLocalDataSource.getHistoryAsXmlString()).called(1);
     });
 
     test('возвращает HistoryFailure при ошибке экспорта данных', () async {
       // Arrange
-      when(historyLocalDataSource.exportRecordsToXml(path)).thenThrow(HistoryExportFailure());
+      when(historyLocalDataSource.getHistoryAsXmlString()).thenThrow(HistoryExportFailure());
 
       // Act
-      final result = await historyRepository.exportHistoryToXml(path);
+      final result = await historyRepository.getHistoryAsXmlString();
       final failure = result.failure!;
 
       // Assert
       expect(result.isFailure, isTrue);
       expect(failure, isA<HistoryExportFailure>());
 
-      verify(historyLocalDataSource.exportRecordsToXml(path)).called(1);
+      verify(historyLocalDataSource.getHistoryAsXmlString()).called(1);
     });
 
-    test('возвращает AppFailure при неизвестной ошибке источника данных', () async {
+    test('возвращает AppFailure при ошибке источника данных', () async {
       // Arrange
-      when(historyLocalDataSource.exportRecordsToXml(path)).thenThrow(UnknownFailure());
+      when(historyLocalDataSource.getHistoryAsXmlString()).thenThrow(UnknownFailure());
 
       // Act
-      final result = await historyRepository.exportHistoryToXml(path);
+      final result = await historyRepository.getHistoryAsXmlString();
       final failure = result.failure!;
 
       // Assert
       expect(result.isFailure, isTrue);
+      expect(failure, isA<AppFailure>());
       expect(failure, isA<UnknownFailure>());
 
-      verify(historyLocalDataSource.exportRecordsToXml(path)).called(1);
+      verify(historyLocalDataSource.getHistoryAsXmlString()).called(1);
     });
   });
 }

@@ -29,4 +29,5 @@ abstract class AppStrings {
   static const history = 'История операций';
   static const rate = 'Курс';
   static const exportSuccess = 'История успешно экспортирована';
+  static const saveHistory = 'Сохранить историю конвертаций';
 }

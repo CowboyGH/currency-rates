@@ -44,10 +44,10 @@ final class HistoryRepositoryImpl implements IHistoryRepository {
   }
 
   @override
-  AsyncResult<void> exportHistoryToXml(String path) async {
+  AsyncResult<String> getHistoryAsXmlString() async {
     try {
-      await _localDataSource.exportRecordsToXml(path);
-      return Result.success(null);
+      final xml = await _localDataSource.getHistoryAsXmlString();
+      return Result.success(xml);
     } on AppFailure catch (e) {
       logFailure(e);
       return Result.failure(e);
