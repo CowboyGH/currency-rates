@@ -1,4 +1,4 @@
-package com.currency.currency_rates
+package com.currency.rates
 
 import io.flutter.embedding.android.FlutterActivity
 
