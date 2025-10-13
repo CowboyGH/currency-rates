@@ -1,0 +1,18 @@
+<ValCurs Date="16.08.2025" name="Foreign Currency Market">
+<Valute ID="R01010">
+<NumCode>036</NumCode>
+<CharCode>AUD</CharCode>
+<Nominal>1</Nominal>
+<Name>Австралийский доллар</Name>
+<Value>52,0546</Value>
+<VunitRate>52,0546</VunitRate>
+</Valute>
+<Valute ID="R01020A">
+<NumCode>944</NumCode>
+<CharCode>AZN</CharCode>
+<Nominal>1</Nominal>
+<Name>Азербайджанский манат</Name>
+<Value>47,0720</Value>
+<VunitRate>47,072</VunitRate>
+</Valute>
+</ValCurs>

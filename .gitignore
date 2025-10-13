@@ -33,6 +33,10 @@ migrate_working_dir/
 .pub/
 /build/
 
+# Build Runner generated
+*.g.dart
+*.mocks.dart
+
 # Symbolication related
 app.*.symbols
 

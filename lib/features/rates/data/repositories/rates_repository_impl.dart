@@ -1,0 +1,45 @@
+import 'package:currency_rates/api/data/mappers/rates_snapshot_mapper.dart';
+import 'package:currency_rates/core/domain/entities/failure/network/network_failure.dart';
+import 'package:currency_rates/core/domain/entities/failure/unknown_failure.dart';
+import 'package:currency_rates/core/domain/entities/result/async_result.dart';
+import 'package:currency_rates/core/domain/entities/result/result.dart';
+import 'package:currency_rates/core/utils/logger.dart';
+import 'package:currency_rates/features/rates/domain/entities/rates_snapshot_entity.dart';
+import 'package:currency_rates/features/rates/domain/repositories/i_rates_repository.dart';
+import 'package:currency_rates/features/rates/domain/sources/i_rates_remote_data_source.dart';
+import 'package:dio/dio.dart';
+
+/// Реализация [IRatesRepository].
+final class RatesRepositoryImpl implements IRatesRepository {
+  final IRatesRemoteDataSource _remoteDataSource;
+
+  RatesRepositoryImpl({required IRatesRemoteDataSource remoteDataSource})
+    : _remoteDataSource = remoteDataSource;
+
+  @override
+  AsyncResult<RatesSnapshotEntity> getRates() async {
+    try {
+      final snapshotDto = await _remoteDataSource.getRates();
+      return Result.success(snapshotDto.toEntity());
+    } on DioException catch (e) {
+      final failure = switch (e.type) {
+        DioExceptionType.sendTimeout ||
+        DioExceptionType.receiveTimeout ||
+        DioExceptionType.cancel ||
+        DioExceptionType.connectionTimeout ||
+        DioExceptionType.connectionError => const NoNetworkFailure(),
+        _ => UnknownNetworkFailure(e),
+      };
+      logFailure(failure);
+      return Result.failure(failure);
+    } catch (e, s) {
+      final failure = UnknownFailure(
+        message: 'Неожиданная ошибка при загрузке курсов валют.',
+        parentException: e,
+        stackTrace: s,
+      );
+      logFailure(failure);
+      return Result.failure(failure);
+    }
+  }
+}
