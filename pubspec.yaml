@@ -1,7 +1,7 @@
 name: currency_rates
 description: "Rates – приложение для отслеживания курсов валют, конвертации и экспорта истории операций."
 publish_to: 'none'
-version: 0.6.2
+version: 0.6.3
 
 environment:
   sdk: ^3.8.0
