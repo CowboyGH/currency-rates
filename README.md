@@ -1,59 +1,91 @@
-# Rates
+# 📈 Rates
 
-Приложение для получения и отображения курсов валют.
+A mobile application for fetching and displaying currency exchange rates.
+
+---
 
 ## 🔗 API
 
-API доступен по адресу:  
+The app uses the official CBR (Central Bank of Russia) XML API:  
 [http://www.cbr.ru/scripts/XML_daily.asp](http://www.cbr.ru/scripts/XML_daily.asp)
 
-## 🧱 Архитектура
+---
 
-Приложение построено на принципах **Clean Architecture** с четким разделением ответственности по слоям: `Data`, `Domain`, `Presentation`.  
-Используется структурный подход **Feature-First**, где каждая функциональность выделена в отдельный модуль.
+## 🧱 Architecture
 
-**Стейт-менеджмент:** `BLoC`/`Cubit`.
+The application follows **Clean Architecture** principles with clear separation of responsibilities between layers:  
+`Data`, `Domain`, and `Presentation`.
 
-**Глобальный DI:** `get_it`.
+- **State management:** `BLoC` / `Cubit`
+- **Global DI:** `get_it`
+- **Local DI (per feature):** `provider`
+- **HTTP client:** `dio` + `retrofit`
+- **Routing:** `go_router` (`core/router/router.dart`)
+- **Local storage:** `hive`
+- **Connectivity tracking:** `connectivity_plus`
 
-**Локальный DI (для каждой фичи):** `provider`.
+The project uses a **feature-first** structure — each feature is an isolated module.
 
-**HTTP-клиент:** `dio` (+ `retrofit`).
+---
 
-**Маршрутизация:** `go_router` (`core/router/router.dart`).
+## 📁 Project Structure
 
-**Локальное хранение данных:** `hive`.
-
-**Отслеживание интернет-соединения:** `connectivity_plus`.
-
-## 📁 Структура проекта
-
-Код приложения находится в директории `lib` и организован следующим образом:
+The application code is located in the `lib` directory and is organized as follows:
 
 - **lib/**
-  - `api/`: Код для взаимодействия с API (модели DTO, клиенты Retrofit).
-  - `assets/`: Строковые константы и пути к ассетам, маршрутам.
-  - `core/`: Ядро приложения. Содержит базовые классы, сервисы и утилиты, не зависящие от бизнес-логики (например, базовый репозиторий, маршрутизатор, обработка ошибок).
-	- `router/`: GoRouter и навигация.
-  - `features/`: Основная директория с фичами приложения.
-    - `app/`: Корневой виджет приложения и настройка DI (initDi).
-    - `common/`: Общие для нескольких фич виджеты, сущности, репозитории, DTO и т.д.
-    - `имя_фичи/`: Изолированный модуль с конкретной функциональностью.
-      - `data/`: Слой данных (реализации репозиториев, источников данных, DTO и мапперы).
-      - `domain/`: Слой доменной логики (Сущности, use case, интерфейсы).
-      - `presentation/`: Слой представления (BLoC/Cubit, UI, экраны, виджеты).
-  - `uikit/`: Набор переиспользуемых UI-компонентов (кнопки, кастомные виджеты, темы).
-  - `main.dart`: Точка входа в приложение для `prod` окружения.
-  - `runner.dart`: Инициализация и запуск приложения.
+  - `api/`: API interaction layer (DTO models, Retrofit clients).
+  - `assets/`: String constants, asset paths, route names.
+  - `core/`: Core layer with reusable services, error handling, base classes, and router configuration.
+    - `router/`: GoRouter navigation setup.
+  - `features/`: Main application features.
+    - `app/`: Root widget and DI initialization (`initDi`).
+    - `common/`: Shared widgets, entities, repositories, DTOs, etc.
+    - `feature_name/`: Individual feature module.
+      - `data/`: Repositories, data sources, DTOs, mappers.
+      - `domain/`: Business logic, entities, use cases, interfaces.
+      - `presentation/`: UI layer, Cubits/BLoCs, screens, widgets.
+  - `uikit/`: Reusable UI components (buttons, themes, custom widgets).
+  - `main.dart`: Entry point for the production environment.
+  - `runner.dart`: App initialization and launch.
 
-### Схема слоев
+---
 
-Каждая фича разделена на три слоя: `UI`, `Domain`, `Data`.
+## 🧭 Layer Structure
 
-- **Data Layer**: Отвечает за получение данных из внешних источников (сеть, база данных). Содержит реализации репозиториев, DTO (Data Transfer Objects) и мапперы для преобразования DTO в доменные сущности.
-- **Domain Layer**: Содержит бизнес-логику приложения. Не зависит от других слоев. Включает в себя доменные модели (Entities) и интерфейсы (контракты) репозиториев.
-- **UI Layer**: Отвечает за отображение данных.
+Each feature consists of three layers: `UI`, `Domain`, and `Data`.
 
-### 📜 Лицензия
+- **Data Layer**  
+  Responsible for fetching and storing data (network, local DB).  
+  Contains repository implementations, DTOs, and mappers.
 
-Этот проект распространяется по лицензии [MIT License](LICENSE).
+- **Domain Layer**  
+  Contains business logic, use cases, and repository contracts.  
+  Independent from other layers.
+
+- **UI Layer**  
+  Displays data and handles user interaction.  
+  Uses Cubits/BLoCs to communicate with the domain layer.
+
+---
+
+## 🛠 Tech Stack
+
+- Flutter / Dart
+- BLoC / Cubit
+- Retrofit + Dio
+- GoRouter
+- Hive
+- Connectivity Plus
+- Feature-First + Clean Architecture
+
+---
+
+## 📜 License
+
+This project is released under the [MIT License](LICENSE).
+
+---
+
+## ✨ Author
+
+Developed by [Ryan Delaney](https://github.com/CowboyGH)
