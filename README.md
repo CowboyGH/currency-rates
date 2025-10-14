@@ -4,6 +4,14 @@ A mobile application for fetching and displaying currency exchange rates.
 
 ---
 
+## 🎥 Preview
+
+<p align="left">
+  <img src="assets/images/preview/rates_app.gif" alt="Rates app preview" width="300"/>
+</p>
+
+---
+
 ## 🔗 API
 
 The app uses the official CBR (Central Bank of Russia) XML API:  
